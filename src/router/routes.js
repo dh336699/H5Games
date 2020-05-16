@@ -1,6 +1,3 @@
-const getToken = r => require.ensure([], () => r(require('@/pages/getToken/getToken')), 'getToken')
-const index = r => require.ensure([], () => r(require('@/pages/index/index')), 'index')
-
 export default [
   {
     path: '/',
@@ -12,7 +9,7 @@ export default [
       title: '授权',
       requireAuth: true
     },
-    component: getToken
+    component: () => import('@/pages/getToken/getToken')
   }, {
     path: '/index',
     name: 'index',
@@ -20,6 +17,14 @@ export default [
       title: '首页',
       requireAuth: true
     },
-    component: index
+    component: () => import('@/pages/index')
+  }, {
+    path: '/live',
+    name: 'live',
+    meta: {
+      title: '直播',
+      requireAuth: true
+    },
+    component: () => import('@/pages/live')
   }
 ]

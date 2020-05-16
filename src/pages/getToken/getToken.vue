@@ -7,11 +7,11 @@
   import {getToken} from '@/api/index'
   import config from '@/config/index'
   export default {
-    data() {
+    data () {
       return {
       }
     },
-   mounted() {
+   mounted () {
      console.log(this.$route.query.code)
       if (localStorage.token) { // 如果有token去重定向页面
         this.$router.replace({
@@ -26,7 +26,7 @@
       }
     },
     methods: {
-      async _getToken() {
+      async _getToken () {
         this.$vux.loading.show({
           text: '授权中...'
         })
@@ -42,7 +42,7 @@
           this.$router.push('/register')
         })
       },
-      _getCode() {
+      _getCode () {
         localStorage.token = ''
           localStorage.removeItem('token')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + config.loginUrl + '/getToken' + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'

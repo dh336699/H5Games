@@ -16,7 +16,7 @@
 // import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 // import { transform13Time } from '@/utils/index'
 export default {
-  data() {
+  data () {
     return {
 
     }

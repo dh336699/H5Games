@@ -14,7 +14,7 @@
 <script>
   import { Swiper } from 'vux'
   export default {
-    data() {
+    data () {
       return {
       }
     },
@@ -45,7 +45,7 @@
       }
     },
     methods: {
-      swiperChange(e) {
+      swiperChange (e) {
         // this.current = e.mp.detail.current
       }
     },

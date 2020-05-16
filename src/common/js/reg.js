@@ -10,7 +10,7 @@ export default class Reg {
    * @param str
    * @returns {boolean}
    */
-  static isNull(str) {
+  static isNull (str) {
       return str == null || str.length === 0 || str === ''
   }
 
@@ -20,7 +20,7 @@ export default class Reg {
    * @param  {String|Number} str
    * @return {Boolean}
    */
-  static isIdCard(str) {
+  static isIdCard (str) {
       return /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/.test(str)
   }
 
@@ -30,7 +30,7 @@ export default class Reg {
    * @param  {String|Number} str
    * @return {Boolean}
    */
-  static isPhoneNum(str) {
+  static isPhoneNum (str) {
       // return /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/.test(str)
       let telReg = /^1[2-9][0-9]{9}$/
       return telReg.test(str)

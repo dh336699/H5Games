@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
-import { setTitle } from '@/utils'
+// import { setTitle } from '@/utils'
 import store from '@/store'
 
 Vue.use(Router)
@@ -30,9 +30,9 @@ router.beforeEach((to, from, next) => {
 })
 //
 router.afterEach((to, from, next) => {
-  if (to.meta && to.meta.title) {
-    setTitle(to.meta.title)
-  }
+  // if (to.meta && to.meta.title) {
+  //   setTitle(to.meta.title)
+  // }
 })
 
 export default router

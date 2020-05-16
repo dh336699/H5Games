@@ -19,7 +19,7 @@
   import {getCarGoodsCount} from '@/common/urls'
   import {toast} from '@/common/msgAlert'
   export default {
-    data() {
+    data () {
       return {
         num: 0,
         discountAmount: 0,
@@ -44,14 +44,14 @@
         default: '去结算'
       }
     },
-    mounted() {
+    mounted () {
       this._getCarGoodsCount()
     },
     methods: {
-      addShopCard() {
+      addShopCard () {
         this.$emit('addShopCar')
       },
-      orderConfirm() {
+      orderConfirm () {
         if (!this.num) {
           toast('温馨提示', '购物车没有商品，请去挑选商品吧~')
           return
@@ -60,10 +60,10 @@
           url: '/pages/details/confirm-order/main'
         })
       },
-      completeOrder() {
+      completeOrder () {
         this.$emit('completeOrder')
       },
-      _getCarGoodsCount() {
+      _getCarGoodsCount () {
         getCarGoodsCount().then((res) => {
           console.log(res, 'shopcard购物车')
           this.num = res.data.data.num

@@ -33,25 +33,55 @@
           color: #231815 !important;
         }
       }
+      .slideInRight {
+        -webkit-animation-name: slideInRight;
+        animation-name: slideInRight;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+      }
       @keyframes slideInRight {
         from {
           -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
-          /* visibility: visible; */
+          visibility: visible;
         }
+
         to {
           -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
         }
       }
-      .slideInRight {
-        -webkit-animation-name: slideInRight;
-        animation-name: slideInRight;
-        -webkit-animation-duration: .4s;
-        animation-duration: .4s;
-      }
       ::-webkit-scrollbar {
         display: none;
+      }
+
+      .video-js .vjs-big-play-button{
+        font-size: 2.5em;
+        line-height: 2.3em;
+        height: 2.5em;
+        width: 2.5em;
+        -webkit-border-radius: 2.5em;
+        -moz-border-radius: 2.5em;
+        border-radius: 2.5em;
+        background-color: #73859f;
+        background-color: rgba(115,133,159,.5);
+        border-width: 0.15em;
+        margin: 0;
+        transform: translate(-50%, -50%);
+      }
+      /* 中间的播放箭头 */
+      .vjs-big-play-button .vjs-icon-placeholder {
+          font-size: 1.63em;
+      }
+      /* 加载圆圈 */
+      .vjs-loading-spinner {
+          font-size: 2.5em;
+          width: 2em;
+          height: 2em;
+          border-radius: 1em;
+      }
+      .video-js.vjs-playing .vjs-tech {
+        pointer-events: auto;
       }
     }
   }
