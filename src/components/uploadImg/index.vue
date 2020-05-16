@@ -9,16 +9,16 @@ import { upload } from '@/api'
 export default {
   props: {
   },
-  data() {
+  data () {
     return {
       uploadName: ''
     }
   },
-  mounted() {
+  mounted () {
     console.log(this.uploadType)
   },
   methods: {
-    upload(e) {
+    upload (e) {
       if (e.target.files.length > 0) {
         this.$vux.loading.show('Loading...')
         let files = e.target.files || e.dataTransfer.files
@@ -41,11 +41,11 @@ export default {
         // this.axiosFun(this.picValue);
       }
     },
-    imgPreview(file) {
+    imgPreview (file) {
       let self = this
       let Orientation
       // 去获取拍照时的信息，解决拍出来的照片旋转问题
-      Exif.getData(file, function() {
+      Exif.getData(file, function () {
         Orientation = Exif.getTag(this, 'Orientation')
       })
       // 看支持不支持FileReader
@@ -59,7 +59,7 @@ export default {
         reader.readAsDataURL(file)
 
         // 读取成功后的回调
-        reader.onloadend = function() {
+        reader.onloadend = function () {
           let result = this.result
           let img = new Image()
           img.src = result
@@ -68,7 +68,7 @@ export default {
             self.headerImage = this.result
             self.postImg()
           } else {
-            img.onload = function() {
+            img.onload = function () {
               let data = self.compress(img, Orientation)
               self.headerImage = data
               self.postImg()
@@ -77,7 +77,7 @@ export default {
         }
       }
     },
-    compress(img, Orientation) {
+    compress (img, Orientation) {
       let _this = this
       let canvas = document.createElement('canvas')
       let ctx = canvas.getContext('2d')
@@ -150,7 +150,7 @@ export default {
       tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0
       return ndata
     },
-    rotateImg(img, direction, canvas) {
+    rotateImg (img, direction, canvas) {
       // 最小与最大旋转方向，图片旋转4次后回到原方向
       const minStep = 0
       const maxStep = 3
@@ -201,7 +201,7 @@ export default {
           break
       }
     },
-    postImg() {
+    postImg () {
       // 这里写接口
       // console.log(this.headerImage)
       const block = this.headerImage.split(';')
@@ -213,7 +213,7 @@ export default {
       let blob = this.b64toBlob(realData, contentType)
       this.axiosFun(blob)
     },
-    uploadDefined(file, data, callback) {
+    uploadDefined (file, data, callback) {
       let _this = this
       let gObjectName = data.dir + this.randomString() + this.getSuffix(this.uploadName)
       let request = new FormData()
@@ -228,7 +228,7 @@ export default {
       let xhr = new XMLHttpRequest()
       xhr.open('POST', data.host)
       xhr.send(request)
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
           // console.log("fileKey => " + data.host + "/" + gObjectName);
           // console.log(_this.imgPaths);
@@ -240,20 +240,20 @@ export default {
         }
       }
     },
-    async imgUpload() {
+    async imgUpload () {
       // const { data } = await uploadImg({url: host, })
     },
-    async axiosFun(blob) {
+    async axiosFun (blob) {
       let that = this
       const { data } = await upload({})
 
-      that.uploadDefined(blob, data, function(host, name) {
+      that.uploadDefined(blob, data, function (host, name) {
         that.$emit('uploadImage', {
           value: host + '/' + name
         })
       })
     },
-    randomString(len) {
+    randomString (len) {
       len = len || 32
       let chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
       let maxPos = chars.length
@@ -263,7 +263,7 @@ export default {
       }
       return pwd
     },
-    getSuffix(filename) {
+    getSuffix (filename) {
       let pos = filename.lastIndexOf('.')
       let suffix = ''
       if (pos !== -1) {
@@ -271,7 +271,7 @@ export default {
       }
       return suffix
     },
-    b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+    b64toBlob (b64Data, contentType = '', sliceSize = 512) {
       const byteCharacters = atob(b64Data)
       const byteArrays = []
 

@@ -31,19 +31,19 @@
 // import * as xx from '@/common/js/wx'
 // import { transform13Time } from '@/common/js'
 export default {
-  data() {
+  data () {
     return {
       timeNum: 60,
       timer: null
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     if (this.timer) { // 如果定时器还在运行 或者直接关闭，不用判断
       clearTimeout(this.timer) // 关闭
     }
   },
   methods: {
-    getCode() {
+    getCode () {
       this.timer = setTimeout(() => {
         this.getCode()
       }, 1000)

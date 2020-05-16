@@ -12,7 +12,7 @@ import VueLazyload from 'vue-lazyload'
 import '@/styles/index.css'
 
 Vue.use(VueLazyload, {
-  loading: require('../static/images/login_logo@2x.png')
+  loading: require('../static/images/regiser-icon1@2x.png')
 })
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin, {isShowMask: true, width: '10em'})
@@ -26,11 +26,11 @@ if ('addEventListener' in document) {
   }, false)
 }
 
-Vue.filter('moment', function(value, formatString) {
+Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD'
   return Moment(value).format(formatString)
 })
-Vue.filter('moment1', function(value, formatString) {
+Vue.filter('moment1', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss'
   return Moment(value).format(formatString)
 })

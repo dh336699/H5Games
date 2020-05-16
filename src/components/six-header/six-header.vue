@@ -22,7 +22,7 @@
       }
     },
     methods: {
-      chooseType(lists, item, index) {
+      chooseType (lists, item, index) {
         this.$emit('chooseType', item)
         lists.forEach((list) => {
           list.status = false

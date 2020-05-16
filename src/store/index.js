@@ -13,14 +13,14 @@ export default new Vuex.Store({
     token: ''
   },
   mutations: {
-    setToken(state, token) {
+    setToken (state, token) {
       console.log('setToken')
       localStorage.token = token // 存入缓存是为了下次进公众号时不用重新授权
       state.token = token
     }
   },
   actions: {
-    async asyncToken({ commit, state }, products) {
+    async asyncToken ({ commit, state }, products) {
       let { data } = await api.getToken(products)
       console.log(data)
       if (!data.code) {

@@ -77,14 +77,14 @@
         default: 20
       }
     },
-    mounted() {
+    mounted () {
       // 保证在DOM渲染完毕后初始化better-scroll
       setTimeout(() => {
         this._initScroll()
       }, 20)
     },
     methods: {
-      _initScroll() {
+      _initScroll () {
         if (!this.$refs.wrapper) {
           return
         }
@@ -129,30 +129,30 @@
           })
         }
       },
-      disable() {
+      disable () {
         // 代理better-scroll的disable方法
         this.scroll && this.scroll.disable()
       },
-      enable() {
+      enable () {
         // 代理better-scroll的enable方法
         this.scroll && this.scroll.enable()
       },
-      refresh() {
+      refresh () {
         // 代理better-scroll的refresh方法
         this.scroll && this.scroll.refresh()
       },
-      scrollTo() {
+      scrollTo () {
         // 代理better-scroll的scrollTo方法
         this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
       },
-      scrollToElement() {
+      scrollToElement () {
         // 代理better-scroll的scrollToElement方法
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
     },
     watch: {
       // 监听数据的变化，延时refreshDelay时间后调用refresh方法重新计算，保证滚动效果正常
-      data() {
+      data () {
         setTimeout(() => {
           this.refresh()
         }, this.refreshDelay)

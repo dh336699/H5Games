@@ -11,7 +11,7 @@
 // import * as xx from '@/common/wx'
 // import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
     }
   },
@@ -22,7 +22,7 @@ export default {
 //  ...mapState({})
 // },
   methods: {
-    conrifm() {
+    conrifm () {
       this.$emit('confrim')
     }
   },

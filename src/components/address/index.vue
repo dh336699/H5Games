@@ -19,7 +19,7 @@ import cityJson from '@/data/city.json'
 // import Vue from 'vue'
 // import { transform13Time } from '@/utils/index'
 export default {
-  data() {
+  data () {
     return {
       addressList: {},
       value4: [],
@@ -27,21 +27,21 @@ export default {
     }
   },
   computed: {
-    title4() {
+    title4 () {
       let title4 = !this.value4.length ? '请选择地址' : ''
       return title4
     }
   },
-  mounted() {
+  mounted () {
     this._initCity()
   },
   methods: {
 //  ...mapMutations({setToken: 'setToken'}),
 //  ...mapActions({asyncToken: 'asyncToken'})
-    pickerChange() {
+    pickerChange () {
       console.log(this.value4)
     },
-    _initCity() {
+    _initCity () {
       cityJson.forEach(item => {
         this.address.push({
           name: item.name,
