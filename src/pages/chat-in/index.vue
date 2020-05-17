@@ -13,6 +13,12 @@
         </div>
       </li>
     </ul>
+
+    <section class="Chat__sendMsg">
+      <img class="Chat__sendMsg-emoji" src="../../common/images/emoji.png" alt="">
+      <input type="text" class="Chat__sendMsg-input" placeholder="我也来聊几句...">
+      <button class="Chat__sendMsg-btn">发送</button>
+    </section>
   </article>
 </template>
 
@@ -41,6 +47,7 @@ export default {
     padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */;
     &-li {
       .list(row, flex-start);
+      margin-bottom: .1733rem /* 6.5/37.5 */;
       padding: .2667rem /* 10/37.5 */ .44rem /* 16.5/37.5 */;
       background: white;
       border: .2667rem /* 10/37.5 */;
@@ -69,6 +76,37 @@ export default {
           font-size: .2667rem /* 10/37.5 */;
         }
       }
+    }
+    &-li:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  &__sendMsg {
+    .list(row, flex-start, center);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .16rem /* 6/37.5 */;
+    background: white;
+    &-emoji {
+      margin-right: .36rem /* 13.5/37.5 */;
+      width: .64rem /* 24/37.5 */;
+    }
+    &-input {
+      margin-right: .2133rem /* 8/37.5 */;
+      width: 7.0533rem /* 264.5/37.5 */;
+      height: .6933rem /* 26/37.5 */;
+      border: .0533rem /* 2/37.5 */ solid rgb(219, 219, 219);
+      border-radius: .2133rem /* 8/37.5 */;
+    }
+    &-btn {
+      width: 1.4533rem /* 54.5/37.5 */;
+      height: .6933rem /* 26/37.5 */;
+      background: rgb(253, 93, 67);
+      color: white;
+      border-radius: .2133rem /* 8/37.5 */;
     }
   }
 }
