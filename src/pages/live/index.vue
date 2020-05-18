@@ -19,31 +19,36 @@
     </p>
 </video> -->
 
-  <video id="container" class="video-js vjs-big-play-centered"
-  width="700" height="450" controls preload="auto"></video>
+  <div style="height: 314px;">
+    <section class="Live__topWrapper">
+    <video id="container" class="video-js vjs-big-play-centered"
+    width="700" height="450" controls preload="auto"></video>
 
-  <section class="Live__user">
-    <div class="Live__user-left">
-      <img class="avatar" src="../../common/images/avatar@2x.png"/>
-      <div class="title">
-        <p>华侨城</p>
-        <span>美好如期 欢乐同行</span>
+    <div class="Live__user">
+      <div class="Live__user-left">
+        <img class="avatar" src="../../common/images/avatar@2x.png"/>
+        <div class="title">
+          <p>华侨城</p>
+          <span>美好如期 欢乐同行</span>
+        </div>
       </div>
     </div>
-  </section>
 
-  <section class="Live__navs">
-    <ul class="Live__navs-nav">
-      <li v-for="(item, index) in navLists" :key="index"
-      @click="activeIdx = index"
-      :class="{'active': activeIdx === item.index}">
-        {{item.nav}}
-      </li>
-    </ul>
+    <div class="Live__navs">
+      <ul class="Live__navs-nav">
+        <li v-for="(item, index) in navLists" :key="index"
+        @click="activeIdx = index"
+        :class="{'active': activeIdx === item.index}">
+          {{item.nav}}
+        </li>
+      </ul>
+    </div>
   </section>
+  </div>
 
   <ActiveInfo v-if="activeIdx === 0" />
   <ChatIn v-else-if="activeIdx === 1" />
+  <PlayGame v-else-if="activeIdx === 2" />
   </article>
 </template>
 
@@ -53,6 +58,7 @@
 // import { transform13Time } from '@/common/js'
 import ActiveInfo from '../active-info'
 import ChatIn from '../chat-in'
+import PlayGame from '../play-game'
 export default {
   data () {
     return {
@@ -79,7 +85,7 @@ export default {
   methods: {
   },
   components: {
-    ActiveInfo, ChatIn
+    ActiveInfo, ChatIn, PlayGame
   }
 }
 </script>
@@ -124,6 +130,14 @@ export default {
       border-radius: 1em;
       margin-top: -1em;
       margin-left: -1.5em;
+  }
+
+  &__topWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
   }
 
   &__user {

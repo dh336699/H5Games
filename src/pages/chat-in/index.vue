@@ -1,7 +1,7 @@
 <template>
   <article class="Chat">
     <ul class="Chat__list">
-      <li class="Chat__list-li">
+      <li class="Chat__list-li" v-for="item in 8" :key="item">
         <img src="../../common/images/index.png" class="avatar" alt="">
         <div class="info">
           <div class="info-title">
@@ -43,11 +43,18 @@ export default {
 <style lang='less' scoped>
 @import '../../common/styles/elements.less';
 .Chat {
+  position: absolute;
+  top: 8.48rem /* 318/37.5 */;
+  left: 0;
+  right: 0;
+  padding-bottom: .96rem /* 36/37.5 */;
+  background: #F5F9FA;
+
   &__list {
     padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */;
     &-li {
       .list(row, flex-start);
-      margin-bottom: .1733rem /* 6.5/37.5 */;
+      margin-bottom: .5333rem /* 20/37.5 */;
       padding: .2667rem /* 10/37.5 */ .44rem /* 16.5/37.5 */;
       background: white;
       border: .2667rem /* 10/37.5 */;
