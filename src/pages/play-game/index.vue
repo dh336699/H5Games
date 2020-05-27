@@ -1,8 +1,9 @@
 <template>
   <article class="PlayGame">
     <section class="PlayGame__play">
-      <img src="../../common/images/play-games.png" alt="">
-      <button @click="play"></button>
+      <img class="PlayGame__play-bg" src="../../common/images/play-games.png" alt="">
+      <img class="PlayGame__play-btn" src="../../common/images/play-games-btn.png" alt="">
+      <button @click="play">倒计时{{timeDown}}</button>
     </section>
   </article>
 </template>
@@ -15,6 +16,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  props: {
+    timeDown: {
+      type: String
     }
   },
   methods: {
@@ -34,8 +40,14 @@ export default {
   background: #F5F9FA;
   &__play {
     padding: .16rem /* 6/37.5 */ .8267rem /* 31/37.5 */ 0 .56rem /* 21/37.5 */;
-    img {
+    &-bg {
       width: 100%;
+    }
+    &-btn {
+      position: absolute;
+      bottom: 120px;
+      left:130px;
+      width: 120px;
     }
     button {
       position: absolute;
@@ -44,6 +56,9 @@ export default {
       width: 120px;
       height: 50px;
       background: transparent;
+      font-size: 12px;
+      color: white;
+      font-weight: bold;
     }
   }
 }

@@ -1,56 +1,60 @@
 export default class Timer {
-  countDown(end, update, handle) { // end-结束的时间 update 倒计时执行的函数 handle 倒计时结束执行的函数
+  constructor () {
+    this.interval = null
+    this.lastTime = ''
+    this.clears()
+  }
+  countDown (end, update, handle) {
     let now = new Date().getTime()
     // console.log(now, 'now')
-    const self = this
-    if (end - now < 0) {
-      handle.call(self)
+    if (end - now < 1000) {
+      this.clears()
+      handle('00:00')
     } else {
-      let lastTime = end - now
+      this.lastTime = end - now
       const pxD = 24 * 60 * 60 * 1000
       const pxH = 60 * 60 * 1000
       const pxM = 60 * 1000
       const pxS = 1000
-      let d = Math.floor(lastTime / pxD)
-      let h = Math.floor((lastTime - d * pxD) / pxH)
-      let m = Math.floor((lastTime - d * pxD - h * pxH) / pxM)
-      let s = Math.floor((lastTime - d * pxD - h * pxH - m * pxM) / pxS)
+      let d = Math.floor(this.lastTime / pxD)
+      let h = Math.floor((this.lastTime - d * pxD) / pxH)
+      let m = Math.floor((this.lastTime - d * pxD - h * pxH) / pxM)
+      let s = Math.floor((this.lastTime - d * pxD - h * pxH - m * pxM) / pxS)
       m = this._padStart0(m)
       s = this._padStart0(s)
       // s = parseInt(s)
       let r = []
       if (d > 0) {
-        r.push(`${d}天`)
+        r.push(`${d}`)
       }
       if (h > 0 || r.length) {
-        r.push(`${h}小时`)
+        r.push(`${h}`)
       }
       if (m > 0 || r.length) {
         r.push(`${m}:`)
       }
       if (s > 0 || r.length) {
-        r.push(`${s}秒`)
+        r.push(`${s}`)
       }
-      self.lastTime = r.join('')
-      update.call(self, r.join(''))
-      var interval = setTimeout(() => {
-        self.countDown(end, update, handle)
-      }, 1000)
-
-      if (!self.lastTime) {
-        update.call(self, '00:00')
-        self.clears(interval)
+      if (this.lastTime <= 0) {
+        update('00:00')
+        this.clears()
+        return
         // clearInterval(interval)
       }
+      this.lastTime = r.join('')
+      update(r.join(''))
+      this.interval = setTimeout(() => {
+        this.countDown(end, update, handle)
+      }, 1000)
     }
   }
-  _padStart0(s) {
+  _padStart0 (s) {
     s = s.toString()
     s = s.padStart(2, '0')
-    // s = parseInt(s)
     return s
   }
-  clears(interval) {
-    clearInterval(interval)
+  clears () {
+    clearTimeout(this.interval)
   }
 }

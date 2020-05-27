@@ -14,6 +14,8 @@
   @import '~vux/src/styles/reset.less';
   html {
     height: 100%;
+    -webkit-overflow-scrolling: touch;
+    touch-action: none;
     body {
       // 解决移动端modal滚动击穿
       height: 100%;
@@ -53,6 +55,12 @@
       }
       ::-webkit-scrollbar {
         display: none;
+      }
+
+      .huaqiao {
+        .vjs-big-play-button{
+          font-size: 1.5em!important;
+        }
       }
 
       .video-js .vjs-big-play-button{
