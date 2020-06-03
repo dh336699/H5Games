@@ -38,6 +38,10 @@ export default {
 @import '../../common/styles/elements.less';
 .PlayGame {
   background: #F5F9FA;
+  position: absolute;
+  top: 8.48rem /* 318/37.5 */;
+  left: 0;
+  right: 0;
   &__play {
     padding: .16rem /* 6/37.5 */ .8267rem /* 31/37.5 */ 0 .56rem /* 21/37.5 */;
     &-bg {
@@ -45,14 +49,14 @@ export default {
     }
     &-btn {
       position: absolute;
-      bottom: 120px;
-      left:130px;
+      bottom: 10px;
+      left: 139px;
       width: 120px;
     }
     button {
       position: absolute;
-      bottom: 120px;
-      left:130px;
+      bottom: 10px;
+      left: 139px;
       width: 120px;
       height: 50px;
       background: transparent;

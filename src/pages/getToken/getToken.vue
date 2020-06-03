@@ -12,18 +12,19 @@
       }
     },
    mounted () {
-     console.log(this.$route.query.code)
-      if (localStorage.token) { // 如果有token去重定向页面
-        this.$router.replace({
-          path: '/register'
-        })
-      } else { // 没有token 去获取code和token
-        if (!this.$route.query.code) { // 首次进来没有code 如果没有code，去调微信接口获取code
-          this._getCode()
-        } else { // 微信重定向回来第二次进来有code，和后台交换token
-          this._getToken()
-        }
-      }
+    //  console.log(this.$route.query.code)
+    //   if (localStorage.token) { // 如果有token去重定向页面
+    //     this.$router.replace({
+    //       path: '/register'
+    //     })
+    //   } else { // 没有token 去获取code和token
+    //     if (!this.$route.query.code) { // 首次进来没有code 如果没有code，去调微信接口获取code
+    //       this._getCode()
+    //     } else { // 微信重定向回来第二次进来有code，和后台交换token
+    //       this._getToken()
+    //     }
+    //   }
+    if (!document.cookie) window.href = 'https://api.shanghaichujie.com/huacheng/index'
     },
     methods: {
       async _getToken () {

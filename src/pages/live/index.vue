@@ -1,10 +1,14 @@
 <template>
   <article class='Live'>
-  <div style='height: 314px;'>
+  <div style='height: 314px; needsclick'>
     <section class='Live__topWrapper'>
-    <video id='container' class='video-js vjs-big-play-centered'
-    width='700' height='450' controls preload='auto'></video>
-
+    <div id='container' class='needsclick video-js vjs-big-play-centered'
+    width='700' height='450' preload='auto'>
+      <source src="http://bo2.syglh.com/live/huacheng.m3u8" class="needsclick" type="rtmp/flv">
+    </div>
+    <div class="Live__liveNum" v-show="commonData.people">
+      当前人数: {{commonData.people / 10000}}万
+    </div>
     <div class='Live__user'>
       <div class='Live__user-left'>
         <img class='avatar' src='../../common/images/avatar@2x.png'/>
@@ -16,7 +20,7 @@
       <div class='Live__user-right'>
         <div class='slide-bar'>
           <img class='orange-bg' src='../../common/images/orange-bg.png' alt=''>
-          <p class='bg' :style="{width: activePercentBg + '%'}">{{activePercent}}%</p>
+          <p class='bg' :style="{width: activePercentBg + '%'}">{{commonData.energy}}%</p>
           <img class='orange' :style="{left: activePercentOrange + '%'}" src='../../common/images/orange-icon.png' alt=''>
         </div>
       </div>
@@ -35,15 +39,15 @@
   </div>
 
   <ActiveInfo v-show='activeIdx === 0' />
-  <ChatIn v-show='activeIdx === 1' />
+  <ChatIn :data="commonData.top" v-show='activeIdx === 1' />
   <PlayGame :timeDown="timeDown" v-show='activeIdx === 2' />
   <DaRenLive v-show='activeIdx === 3' />
 
   <section v-show='activeIdx === 4' class='Live__huaqiao'>
-    <BScroll :pullup='true' @scrollToEnd='scroll()' class='Live__huaqiao-videoWrapper'>
-      <div v-for='(item, idx) in list' :key='item.id' class='videoDiv' @click="play(idx)">
-        <video :id="'myVideo' + idx" class='huaqiao video-js vjs-big-play-centered'>
-          <source :src="item.src" type="video/mp4" />
+    <BScroll :pullup='true' v-if="commonData.city" :data="commonData.city" @scrollToEnd='scroll()' class='Live__huaqiao-videoWrapper'>
+      <div v-for='(item, idx) in commonData.city' :key='item.id' class='videoDiv' @click="play(idx)">
+        <video :id="'myVideo' + idx" class='needsclick huaqiao video-js vjs-big-play-centered'>
+          <source :src="item.url" type="video/mp4" />
         </video>
         <p>我曹啊</p>
       </div>
@@ -53,7 +57,7 @@
 </template>
 
 <script>
-// import * as api from '@/api'
+import * as api from '@/api'
 // import * as xx from '@/common/js/wx'
 // import { transform13Time } from '@/common/js'
 import ActiveInfo from '../active-info'
@@ -62,6 +66,7 @@ import PlayGame from '../play-game'
 import DaRenLive from '../daRen-live'
 import BScroll from '../../components/bscroll'
 import Timer from '../../class/timer.js'
+
 export default {
   data () {
     return {
@@ -70,7 +75,7 @@ export default {
         {index: 0, nav: '活动信息'},
         {index: 1, nav: '聊天互动'},
         {index: 2, nav: '精彩纷橙'},
-        // {index: 3, nav: '达人直播'},
+        {index: 3, nav: '达人直播'},
         {index: 4, nav: '精彩华侨城'}
       ],
       activeIdx: 0,
@@ -95,28 +100,59 @@ export default {
       ],
       timer: null,
       timeStamp: 1590566435000,
-      timeDown: null
+      timeDown: null,
+      commonData: {}
     }
   },
   computed: {
     activePercentBg () {
-      if (this.activePercent === 100) return 86
-      return (this.activePercent - 4)
+      if (Number(this.commonData.energy) === 100) return 86
+      return (Number(this.commonData.energy) - 4)
     },
     activePercentOrange () {
-      if (this.activePercent === 100) return 89
-      else if (this.activePercent < 20.33) return 24
-      return (this.activePercent)
+      if (Number(this.commonData.energy) === 100) return 89
+      else if (Number(this.commonData.energy) < 20.33) return 24
+      return (Number(this.commonData.energy))
     }
   },
   mounted () {
-    this.player = videojs('container', {}, function onPlayerReady () {
-      // 视频播放器初始化完毕，就会调用这个回调函数
-      this.src({
-        src: '//vjs.zencdn.net/v/oceans.mp4',
-        type: 'video/mp4'
-      })
-    })
+    this.getLive()
+    this.getCommon()
+    // this.player = videojs('container', {
+    //   controls: true,
+    //   preload: 'auto',
+    //   autoplay: true,
+    //   controlBar: {
+    //     playToggle: true,
+    //     remainingTimeDisplay: false,
+    //     progressControl: false
+    //   }
+    // })
+    var options = {
+      'm3u8': 'http://bo2.syglh.com/live/huacheng.m3u8', // ps请替换成实际可用的播放地址
+      // 'autoplay': true, // iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+      // mp4: '//1256993030.vod2.myqcloud.com/d520582dvodtransgzp1256993030/7732bd367447398157015849771/v.f30.mp4',
+      // controls: 'system',
+      coverpic: {
+        style: 'cover',
+        src: 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/images/%E7%9B%B4%E6%92%AD%E5%BE%85%E6%9C%BA%E9%A1%B5%E9%9D%A2.png'
+      },
+      autoplay: true,
+      live: true,
+      width: '100%',
+      height: '212',
+      wording: {
+        2032: '请求视频失败，请检查网络',
+        2048: '请求m3u8文件失败，可能是网络错误或者跨域问题',
+        13: '直播已经结束，请稍后再来'
+      },
+      listener: (msg) => {
+        if (msg.type === 'error') {
+          console.log(msg)
+        }
+      }
+    }
+    this.player = new TcPlayer('container', options)
   },
   beforeDestroy () {
     this.list.map((item, i) => {
@@ -124,6 +160,17 @@ export default {
     })
   },
   methods: {
+    toogle () {
+      console.log(this.player)
+      this.player.togglePlay()
+    },
+    getLive () {
+      // api.getLive()
+    },
+    async getCommon () {
+      this.commonData = await api.getCommon()
+      console.log(this.commonData)
+    },
     updateToZero (val) {
       this.timeDown = val
       console.log('ending' + val)
@@ -140,7 +187,7 @@ export default {
       this.activeIdx = index
       if (this.activeIdx === 4) {
         this.$nextTick(() => {
-          this.showVideoList()
+          this.commonData.city.length && this.showVideoList()
         })
       }
       if (this.activeIdx === 2) {
@@ -148,11 +195,14 @@ export default {
       }
     },
     showVideoList () {
-      this.list.map((item, i) => {
+      this.commonData.city.map((item, i) => {
         let play = videojs('myVideo' + i, {
-           preload: 'auto',
-           autoplay: false,
-           controls: true
+           controls: true,
+           controlBar: {
+            playToggle: true,
+            remainingTimeDisplay: false,
+            progressControl: false
+          }
         })
         this.huaqiaoArr.push(play)
       })
@@ -227,6 +277,15 @@ export default {
     left: 0;
     right: 0;
     z-index: 2;
+  }
+
+  &__liveNum {
+    position: absolute;
+    top: 4.9867rem /* 187/37.5 */;
+    right: .8533rem /* 32/37.5 */;
+    color: white;
+    z-index: 3;
+    font-size: 10px;
   }
 
   &__user {

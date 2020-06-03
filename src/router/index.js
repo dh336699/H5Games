@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
-// import { setTitle } from '@/utils'
-import store from '@/store'
 
 Vue.use(Router)
 
@@ -14,19 +12,14 @@ const RouterConfig = {
 const router = new Router(RouterConfig)
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(r => r.meta.requireAuth)) {
-    if (store.state.token) {
-      next()
-    } else {
-      // next({
-      //   path: '/',
-      //   query: {redirect: to.fullPath}
-      // })
-      next()
-    }
-  } else {
-    next()
-  }
+  // let token = document.cookie
+  // if (!token) {
+  //   next({
+  //     path: '/getToken',
+  //     query: {redirect: to.fullPath}
+  //   })
+  // }
+  next()
 })
 //
 router.afterEach((to, from, next) => {

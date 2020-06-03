@@ -7,9 +7,11 @@ import config from '@/config/index'
 let util = {
 
 }
+
+const BASEURL = 'https://api.shanghaichujie.com'
 //  创建axiox 实例
 util.http = axios.create({
-  baseURL: config.api,
+  baseURL: BASEURL,
   timeout: 30000
 })
 // http request 拦截器
@@ -31,7 +33,7 @@ util.http.interceptors.request.use(
 // http response 拦截器
 util.http.interceptors.response.use(
   response => {
-    return response
+    return response.data
   },
   error => {
     if (error.response) {

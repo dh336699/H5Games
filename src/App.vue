@@ -27,6 +27,9 @@
     #app {
       min-height: 100%;
       background: #F3EEEB;
+      .vcp-controls-panel {
+        font-size: 10px;
+      }
       .vux-header {
         background: white;
         color: #231815 !important;
@@ -90,6 +93,11 @@
       }
       .video-js.vjs-playing .vjs-tech {
         pointer-events: auto;
+      }
+
+      .vjs-fullscreen-control {
+        position: absolute !important;
+        right: 0;
       }
     }
   }

@@ -1,15 +1,15 @@
 <template>
   <article class="Chat">
     <ul class="Chat__list">
-      <li class="Chat__list-li" v-for="item in 8" :key="item">
-        <img src="../../common/images/index.png" class="avatar" alt="">
+      <li class="Chat__list-li" v-for="item in data" :key="item.msg">
+        <img :src="item.avatar" class="avatar" alt="">
         <div class="info">
           <div class="info-title">
-            <p>花橙小助手 </p>
-            <img src="../../common/images/offical.png" alt="">
+            <p>{{item.nickname}} </p>
+            <img src="../../common/images/offical.png" v-show="item.is_official" alt="">
             <img src="../../common/images/ding.png" alt="">
           </div>
-          <p class="info-desc">直播间将会不定时开启游戏抽奖直播间将会不定时开启游戏抽奖直播间将会不定时开启游戏抽奖直播间将会不定时开启游戏抽奖直播间将会不定时开启游戏抽奖</p>
+          <p class="info-desc">{{item.msg}}</p>
         </div>
       </li>
     </ul>
@@ -30,6 +30,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  props: {
+    data: {
+      type: Array
     }
   },
   methods: {

@@ -9,3 +9,7 @@ export const getToken = data => Util.http.get('/core/getToken?code=' + data.code
 export const upload = data => Util.http.get(`/wechat/common/oss-token`, data)
 // 个人中心
 export const queryBalance = data => Util.http.get('/core/queryBalance', {})
+
+export const getLive = data => Util.http.get('rtmp://bo.syglh.com/huacheng/huacheng?auth_key=1590891727-0-0-99ded48e3cfdc77bc94cebd2713b127f', {baseURL: 'http: 123'})
+
+export const getCommon = data => Util.http.get('/api/huacheng/common', {})
