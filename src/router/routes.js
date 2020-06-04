@@ -3,6 +3,14 @@ export default [
     path: '/',
     redirect: '/index'
   }, {
+    path: '/test',
+    name: 'test',
+    meta: {
+      title: '授权',
+      requireAuth: true
+    },
+    component: () => import('@/pages/test')
+  }, {
     path: '/getToken',
     name: 'getToken',
     meta: {

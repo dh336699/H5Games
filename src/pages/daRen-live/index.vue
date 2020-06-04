@@ -1,21 +1,23 @@
 <template>
   <article class="Daren">
-    <ul class="Daren__list">
-      <li class="Daren__list-li" v-for="item in 8" :key="item">
-        <img src="../../common/images/index.png" class="avatar" alt="">
-        <div class="info">
-          <p>暴走姐妹花X华侨城发布会，碰撞惊奇火花</p>
-          <span>暴走姐妹花X华侨城发布会，碰撞惊奇火花暴走姐妹花X华侨城发布会，碰撞惊奇火花暴走姐妹花X华侨城发布会，碰撞惊奇火花暴走姐妹花X华侨城发布会，碰撞惊奇火花暴走姐妹花X华侨城发布会，碰撞惊奇火花</span>
-        </div>
-        <div class="source">
-          <img src="../../common/images/daren-icon.png" alt="">
-          <p>
-            <span></span>
-            <span>微博</span>
-          </p>
-        </div>
-      </li>
-    </ul>
+    <BScroll class="Daren__Bscroll" :data="data">
+      <ul class="Daren__list">
+        <li class="Daren__list-li" v-for="(item, index) in data" :key="index" @click="navTo(item.url)">
+          <img :src="item.img" class="avatar" alt="">
+          <div class="info">
+            <p>{{item.title}}</p>
+            <span>{{item.content}}</span>
+          </div>
+          <div class="source" v-if="item.source || item.icon">
+            <img :src="item.icon" alt="">
+            <p>
+              <span></span>
+              <span>{{item.source}}</span>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </BScroll>
   </article>
 </template>
 
@@ -23,16 +25,26 @@
 // import * as api from '@/api'
 // import * as xx from '@/common/js/wx'
 // import { transform13Time } from '@/common/js'
+import BScroll from '../../components/bscroll'
 export default {
   data () {
     return {
 
     }
   },
+  props: {
+    data: {
+      type: Array,
+      defaul: []
+    }
+  },
   methods: {
+    navTo (url) {
+      window.location.href = url
+    }
   },
   components: {
-
+    BScroll
   }
 }
 </script>
@@ -46,8 +58,14 @@ export default {
   right: 0;
   padding-bottom: .2667rem /* 10/37.5 */;
   background: #F5F9FA;
+
+  &__Bscroll {
+    height: 8.3733rem /* 314/37.5 */;
+  }
+
   &__list {
     padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */;
+    background: #F5F9FA;
     &-li {
       position: relative;
       display: flex;

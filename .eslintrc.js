@@ -32,6 +32,7 @@ module.exports = {
   globals: {
     Modal: true,
     videojs: true,
-    TcPlayer: true
+    TcPlayer: true,
+    io: true
   }
 }

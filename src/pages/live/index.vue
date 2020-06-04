@@ -2,9 +2,17 @@
   <article class='Live'>
   <div style='height: 314px; needsclick'>
     <section class='Live__topWrapper'>
+    <!-- <canvas id="liveCanvas" class="Live__canvas"/> -->
+    <!-- <video id='container' class="Live__canvas" style="z-index: 0" src=" video-js vjs-big-play-centered"></video> -->
     <div id='container' class='needsclick video-js vjs-big-play-centered'
     width='700' height='450' preload='auto'>
       <source src="http://bo2.syglh.com/live/huacheng.m3u8" class="needsclick" type="rtmp/flv">
+      <div style="width: 100%;height: 212px;position: absolute;z-index: 10">
+        <vue-baberrage
+          ref="baber"
+          :isShow="true"
+          :barrageList="barrageLists" />
+      </div>
     </div>
     <div class="Live__liveNum" v-show="commonData.people">
       当前人数: {{commonData.people / 10000}}万
@@ -21,7 +29,10 @@
         <div class='slide-bar'>
           <img class='orange-bg' src='../../common/images/orange-bg.png' alt=''>
           <p class='bg' :style="{width: activePercentBg + '%'}">{{commonData.energy}}%</p>
-          <img class='orange' :style="{left: activePercentOrange + '%'}" src='../../common/images/orange-icon.png' alt=''>
+          <img class='orange'
+          :class="{'active-orange': isActiveOrange}"
+          @click="toggleOrange()"
+          :style="{left: activePercentOrange + '%'}" src='../../common/images/orange-icon.png' alt=''>
         </div>
       </div>
     </div>
@@ -37,11 +48,10 @@
     </div>
   </section>
   </div>
-
   <ActiveInfo v-show='activeIdx === 0' />
-  <ChatIn :data="commonData.top" v-show='activeIdx === 1' />
+  <ChatIn :data.sync="commonData.top" v-show='activeIdx === 1' />
   <PlayGame :timeDown="timeDown" v-show='activeIdx === 2' />
-  <DaRenLive v-show='activeIdx === 3' />
+  <DaRenLive :data="commonData.live" v-show='activeIdx === 3' />
 
   <section v-show='activeIdx === 4' class='Live__huaqiao'>
     <BScroll :pullup='true' v-if="commonData.city" :data="commonData.city" @scrollToEnd='scroll()' class='Live__huaqiao-videoWrapper'>
@@ -66,10 +76,13 @@ import PlayGame from '../play-game'
 import DaRenLive from '../daRen-live'
 import BScroll from '../../components/bscroll'
 import Timer from '../../class/timer.js'
+import { MESSAGE_TYPE } from 'vue-baberrage'
 
 export default {
   data () {
     return {
+      barrageLists: [],
+      currentId: 0,
       player: null,
       navLists: [
         {index: 0, nav: '活动信息'},
@@ -101,7 +114,20 @@ export default {
       timer: null,
       timeStamp: 1590566435000,
       timeDown: null,
-      commonData: {}
+      commonData: {},
+      isActiveOrange: false,
+      dataBarrage: [{
+        value: 'speed设为0为非滚动',
+        time: 1, // 单位秒
+        speed: 0
+      }, {
+        value: 'time控制弹幕时间，单位秒',
+        color: 'blue',
+        time: 2
+      }, {
+        value: '视频共21秒',
+        time: 3.2
+      }]
     }
   },
   computed: {
@@ -118,41 +144,8 @@ export default {
   mounted () {
     this.getLive()
     this.getCommon()
-    // this.player = videojs('container', {
-    //   controls: true,
-    //   preload: 'auto',
-    //   autoplay: true,
-    //   controlBar: {
-    //     playToggle: true,
-    //     remainingTimeDisplay: false,
-    //     progressControl: false
-    //   }
-    // })
-    var options = {
-      'm3u8': 'http://bo2.syglh.com/live/huacheng.m3u8', // ps请替换成实际可用的播放地址
-      // 'autoplay': true, // iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
-      // mp4: '//1256993030.vod2.myqcloud.com/d520582dvodtransgzp1256993030/7732bd367447398157015849771/v.f30.mp4',
-      // controls: 'system',
-      coverpic: {
-        style: 'cover',
-        src: 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/images/%E7%9B%B4%E6%92%AD%E5%BE%85%E6%9C%BA%E9%A1%B5%E9%9D%A2.png'
-      },
-      autoplay: true,
-      live: true,
-      width: '100%',
-      height: '212',
-      wording: {
-        2032: '请求视频失败，请检查网络',
-        2048: '请求m3u8文件失败，可能是网络错误或者跨域问题',
-        13: '直播已经结束，请稍后再来'
-      },
-      listener: (msg) => {
-        if (msg.type === 'error') {
-          console.log(msg)
-        }
-      }
-    }
-    this.player = new TcPlayer('container', options)
+    this._initVideo()
+    this._getDanMu()
   },
   beforeDestroy () {
     this.list.map((item, i) => {
@@ -160,6 +153,22 @@ export default {
     })
   },
   methods: {
+    addToList () {
+      this.barrageList.push({
+        id: ++this.currentId,
+        avatar: '',
+        msg: this.msg,
+        time: 5,
+        type: MESSAGE_TYPE.NORMAL
+      })
+    },
+    toggleOrange () {
+      if (this.isActiveOrange) return
+      this.isActiveOrange = true
+      setTimeout(() => {
+        this.isActiveOrange = false
+      }, 2000)
+    },
     toogle () {
       console.log(this.player)
       this.player.togglePlay()
@@ -217,6 +226,48 @@ export default {
     },
     scroll () {
       console.log(111)
+    },
+    _getDanMu () {
+      console.log('进入')
+      let socket = io('http://api.shanghaichujie.com:3000')
+      socket.on('huacheng', (data) => {
+        console.log(data, '!!!!!!!')
+        this.barrageLists.push({
+          id: ++this.currentId,
+          avatar: data.avatar,
+          msg: data.content,
+          time: 5,
+          type: MESSAGE_TYPE.NORMAL
+        })
+        console.log(this.barrageLists)
+      })
+    },
+    _initVideo () {
+      var options = {
+        'm3u8': 'http://bo2.syglh.com/live/huacheng.m3u8', // ps请替换成实际可用的播放地址
+        // 'autoplay': true, // iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+        // mp4: '//1256993030.vod2.myqcloud.com/d520582dvodtransgzp1256993030/7732bd367447398157015849771/v.f30.mp4',
+        // controls: 'system',
+        coverpic: {
+          style: 'cover',
+          src: 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/images/%E7%9B%B4%E6%92%AD%E5%BE%85%E6%9C%BA%E9%A1%B5%E9%9D%A2.png'
+        },
+        autoplay: true,
+        live: true,
+        width: '100%',
+        height: '212',
+        wording: {
+          2032: '请求视频失败，请检查网络',
+          2048: '请求m3u8文件失败，可能是网络错误或者跨域问题',
+          13: '直播已经结束，请稍后再来'
+        },
+        listener: (msg) => {
+          if (msg.type === 'error') {
+            console.log(msg)
+          }
+        }
+      }
+      this.player = new TcPlayer('container', options)
     }
   },
   components: {
@@ -279,6 +330,14 @@ export default {
     z-index: 2;
   }
 
+  &__canvas {
+    position: absolute;
+    width: 640px;
+    height: 212px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   &__liveNum {
     position: absolute;
     top: 4.9867rem /* 187/37.5 */;
@@ -289,7 +348,7 @@ export default {
   }
 
   &__user {
-    .list(row, space-between);
+    .list(row, space-between, center);
     padding: .3333rem /* 12.5/37.5 */ 0.6267rem /* 23.5/37.5 */ .3333rem /* 12.5/37.5 */ .4667rem /* 17.5/37.5 */;
     background: white;
     &-left {
@@ -353,6 +412,70 @@ export default {
           top: -4px;
           height: 1.0133rem /* 38/37.5 */;
         }
+        .active-orange {
+          animation-name: upAnimation;
+          transform-origin: center bottom;
+          animation-duration: 2s;
+          animation-fill-mode: both;
+          animation-iteration-count: infinite;
+          animation-delay: .5s;
+        }
+        @keyframes upAnimation {
+        0% {
+            transform: rotate(0deg);
+            transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+        }
+
+        10% {
+            transform: rotate(-12deg);
+            transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+        }
+
+        20% {
+            transform: rotate(12deg);
+            transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+        }
+
+        28% {
+            transform: rotate(-10deg);
+            transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+        }
+
+        36% {
+            transform: rotate(10deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        42% {
+            transform: rotate(-8deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        48% {
+            transform: rotate(8deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        52% {
+            transform: rotate(-4deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        56% {
+            transform: rotate(4deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        60% {
+            transform: rotate(0deg);
+            transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
+        }
+
+        100% {
+            transform: rotate(0deg);
+            transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+        }
+      }
       }
     }
   }

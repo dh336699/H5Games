@@ -12,7 +12,7 @@ export const alert = (context, content, onHide, title = '提示') => {
   context.$vux.alert.show({
     title,
     content,
-    onShow() {
+    onShow () {
       console.log('Plugin: I\'m showing')
     },
     onHide

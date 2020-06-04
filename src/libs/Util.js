@@ -18,7 +18,7 @@ util.http = axios.create({
 util.http.interceptors.request.use(
   config => {
     config.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
     let token = localStorage.getItem('token')
     if (token) {

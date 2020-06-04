@@ -1,5 +1,5 @@
 // 时间戳处理函数 转换的格式为：2018-1-2 => 2018-01-02 || 2018-01-02 10:00:00
-export function transform13Time(timestamp, type) {
+export function transform13Time (timestamp, type) {
   // var date = new Date(timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
   var date = new Date(timestamp)
   var Y = date.getFullYear() + '-'
@@ -20,7 +20,7 @@ export function transform13Time(timestamp, type) {
   }
 }
 // 时间处理函数 例如：2018-1-2 => 2018-01-02
-export function padStart(str) {
+export function padStart (str) {
   str = str.toString()
   str = str.padStart(2, '0')
   return str
@@ -89,7 +89,7 @@ export const time60s = (timeNum, showTime) => {
 //       }
 //     }
 
-export const _jssdk = () => {
+export const _jssdk = async () => {
   let url = window.location.href
   let index = url.indexOf('?')
   let currUrl = window.location.href.slice(0, index)

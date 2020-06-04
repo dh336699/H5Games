@@ -1,35 +1,38 @@
 <template>
   <article class="Chat">
-    <ul class="Chat__list">
-      <li class="Chat__list-li" v-for="item in data" :key="item.msg">
-        <img :src="item.avatar" class="avatar" alt="">
-        <div class="info">
-          <div class="info-title">
-            <p>{{item.nickname}} </p>
-            <img src="../../common/images/offical.png" v-show="item.is_official" alt="">
-            <img src="../../common/images/ding.png" alt="">
+    <BScroll v-if="data" :data="data" class="Chat__Bscroll">
+      <ul class="Chat__list">
+        <li class="Chat__list-li" v-for="(item, index) in data" :key="index">
+          <img :src="item.avatar" class="avatar" alt="">
+          <div class="info">
+            <div class="info-title">
+              <p>{{item.nickname}} </p>
+              <img src="../../common/images/offical.png" v-show="item.is_official" alt="">
+              <img src="../../common/images/ding.png" alt="">
+            </div>
+            <p class="info-desc">{{item.msg}}</p>
           </div>
-          <p class="info-desc">{{item.msg}}</p>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </BScroll>
 
     <section class="Chat__sendMsg">
-      <img class="Chat__sendMsg-emoji" src="../../common/images/emoji.png" alt="">
-      <input type="text" class="Chat__sendMsg-input" placeholder="我也来聊几句...">
-      <button class="Chat__sendMsg-btn">发送</button>
+      <!-- <img class="Chat__sendMsg-emoji" src="../../common/images/emoji.png" alt=""> -->
+      <input type="text" class="Chat__sendMsg-input" v-model="msg" placeholder="我也来聊几句...">
+      <button class="Chat__sendMsg-btn" @click="sendMsg()">发送</button>
     </section>
   </article>
 </template>
 
 <script>
-// import * as api from '@/api'
+import * as api from '@/api'
 // import * as xx from '@/common/js/wx'
 // import { transform13Time } from '@/common/js'
+import BScroll from '../../components/bscroll'
 export default {
   data () {
     return {
-
+      msg: ''
     }
   },
   props: {
@@ -38,9 +41,15 @@ export default {
     }
   },
   methods: {
+    async sendMsg () {
+      // this.data.push(this.msg)
+      if (!this.msg) return
+      await api.sendMsg({openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
+      this.msg = ''
+    }
   },
   components: {
-
+    BScroll
   }
 }
 </script>
@@ -55,8 +64,13 @@ export default {
   padding-bottom: .96rem /* 36/37.5 */;
   background: #F5F9FA;
 
+  &__Bscroll {
+    height: 8.3733rem /* 314/37.5 */;
+  }
+
   &__list {
-    padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */;
+    padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */ 1.3333rem /* 50/37.5 */;
+    background: #F5F9FA;
     &-li {
       .list(row, flex-start);
       margin-bottom: .5333rem /* 20/37.5 */;
@@ -95,7 +109,7 @@ export default {
   }
 
   &__sendMsg {
-    .list(row, flex-start, center);
+    .list(row, flex-end, center);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -108,10 +122,12 @@ export default {
     }
     &-input {
       margin-right: .2133rem /* 8/37.5 */;
+      padding-left: .16rem /* 6/37.5 */;
       width: 7.0533rem /* 264.5/37.5 */;
       height: .6933rem /* 26/37.5 */;
       border: .0533rem /* 2/37.5 */ solid rgb(219, 219, 219);
       border-radius: .2133rem /* 8/37.5 */;
+      font-size: 10px;
     }
     &-btn {
       width: 1.4533rem /* 54.5/37.5 */;
