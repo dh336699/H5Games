@@ -7,7 +7,7 @@
     <div id='container' class='needsclick video-js vjs-big-play-centered'
     width='700' height='450' preload='auto'>
       <source src="http://bo2.syglh.com/live/huacheng.m3u8" class="needsclick" type="rtmp/flv">
-      <div style="width: 100%;height: 212px;position: absolute;z-index: 10">
+      <div style="width: 100%;height: 52px;position: absolute;z-index: 10">
         <vue-baberrage
           ref="baber"
           :isShow="true"
@@ -53,13 +53,13 @@
   <PlayGame :timeDown="timeDown" v-show='activeIdx === 2' />
   <DaRenLive :data="commonData.live" v-show='activeIdx === 3' />
 
-  <section v-show='activeIdx === 4' class='Live__huaqiao'>
-    <BScroll :pullup='true' v-if="commonData.city" :data="commonData.city" @scrollToEnd='scroll()' class='Live__huaqiao-videoWrapper'>
+  <section v-show='activeIdx === 4' class='Live__huaqiao needsclick'>
+    <BScroll :pullup='true' v-if="commonData.city" :data="commonData.city" @scrollToEnd='scroll()' class='needsclick Live__huaqiao-videoWrapper'>
       <div v-for='(item, idx) in commonData.city' :key='item.id' class='videoDiv' @click="play(idx)">
-        <video :id="'myVideo' + idx" class='needsclick huaqiao video-js vjs-big-play-centered'>
-          <source :src="item.url" type="video/mp4" />
+        <video :id="'myVideo' + idx" playsinline
+        class='needsclick huaqiao video-js vjs-big-play-centered'>
+          <source :src="item.url" class="needsclick" type="video/mp4" />
         </video>
-        <p>我曹啊</p>
       </div>
     </BScroll>
   </section>
@@ -178,6 +178,7 @@ export default {
     },
     async getCommon () {
       this.commonData = await api.getCommon()
+      this.commonData.city = [...this.commonData.city]
       console.log(this.commonData)
     },
     updateToZero (val) {
@@ -195,9 +196,9 @@ export default {
     changeActive (index) {
       this.activeIdx = index
       if (this.activeIdx === 4) {
-        this.$nextTick(() => {
+        // this.$nextTick(() => {
           this.commonData.city.length && this.showVideoList()
-        })
+        // })
       }
       if (this.activeIdx === 2) {
         this.countDown()
@@ -214,6 +215,11 @@ export default {
           }
         })
         this.huaqiaoArr.push(play)
+        // 处理fastclick和videojs的点击两次暂停问题
+        let btnList = document.querySelectorAll('.vjs-play-control')
+        btnList.forEach(item => {
+          item.classList.add('needsclick')
+        })
       })
     },
     play (idx) {
@@ -509,10 +515,17 @@ export default {
           height: 2.3867rem /* 89.5/37.5 */;
           border-radius: .32rem /* 12/37.5 */;
 
+          video {
+            border-radius: 0.32rem !important;
+            width: 100% !important;
+            height: 100% !important;
+          }
+
           .vjs-big-play-button{
             font-size: 1.5em!important;
           }
         }
+        .vjs-paused .vjs-big-play-button, .vjs-paused.vjs-has-started .vjs-big-play-button { display: block; }
         p {
           margin-top: .1333rem /* 5/37.5 */;
           font-size: .2667rem /* 10/37.5 */;

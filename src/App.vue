@@ -82,7 +82,7 @@
       }
       /* 中间的播放箭头 */
       .vjs-big-play-button .vjs-icon-placeholder {
-          font-size: 1.63em;
+          font-size: 1.63em !important;
       }
       /* 加载圆圈 */
       .vjs-loading-spinner {
