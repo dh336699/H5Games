@@ -17,7 +17,7 @@
     </BScroll>
 
     <section class="Chat__sendMsg">
-      <!-- <img class="Chat__sendMsg-emoji" src="../../common/images/emoji.png" alt=""> -->
+      <img class="Chat__sendMsg-emoji" src="../../common/images/emoji.png" alt="">
       <input type="text" class="Chat__sendMsg-input" v-model="msg" placeholder="我也来聊几句...">
       <button class="Chat__sendMsg-btn" @click="sendMsg()">发送</button>
     </section>

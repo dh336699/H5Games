@@ -2,8 +2,6 @@
   <article class='Live'>
   <div style='height: 314px; needsclick'>
     <section class='Live__topWrapper'>
-    <!-- <canvas id="liveCanvas" class="Live__canvas"/> -->
-    <!-- <video id='container' class="Live__canvas" style="z-index: 0" src=" video-js vjs-big-play-centered"></video> -->
     <div id='container' class='needsclick video-js vjs-big-play-centered'
     width='700' height='450' preload='auto'>
       <source src="http://bo2.syglh.com/live/huacheng.m3u8" class="needsclick" type="rtmp/flv">

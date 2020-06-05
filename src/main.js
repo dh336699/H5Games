@@ -9,7 +9,9 @@ import Reg from './common/js/reg'
 import VueLazyload from 'vue-lazyload'
 import '@/styles/index.css'
 import { vueBaberrage } from 'vue-baberrage'
+import { EmojiPickerPlugin } from 'vue-emoji-picker'
 
+Vue.use(EmojiPickerPlugin)
 Vue.use(vueBaberrage)
 
 Vue.use(VueLazyload, {
