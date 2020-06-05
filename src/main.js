@@ -9,7 +9,9 @@ import Reg from './common/js/reg'
 import VueLazyload from 'vue-lazyload'
 import '@/styles/index.css'
 import { vueBaberrage } from 'vue-baberrage'
+import { ToastPlugin } from 'vux'
 
+Vue.use(ToastPlugin)
 Vue.use(vueBaberrage)
 Vue.use(VueLazyload, {
   loading: require('../static/images/regiser-icon1@2x.png')

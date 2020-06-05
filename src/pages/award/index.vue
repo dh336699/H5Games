@@ -22,27 +22,29 @@
     </div>
     <div class="btn-award">
       <div class="list" v-if="reward == 3" @click="show = true">
-        <input type="text" placeholder="城市：" v-model="city" readonly>
+        <!-- <input type="text" placeholder="城市：" v-model="city" readonly> -->
+        <PopupPicker :data="pickData" v-model="city" placeholder="城市"></PopupPicker>
         <img src="../../common/images/arrow.png" alt="">
       </div>
       <div class="list">
-        <input type="text" placeholder="请输入手机号码" class="in-input">
+        <input type="number" placeholder="请输入手机号码" class="in-input" v-model="phone">
       </div>
-      <img src="../../common/images/get.png" alt="" class="icon">
+      <img src="../../common/images/get.png" alt="" class="icon" @click="getGift">
       <!-- <img src="../../common/images/back.png" alt="" class="icon"> -->
     </div>
   </article>
 </template>
 
 <script>
-import {getAward} from '@/api/index'
+import { getAward } from '@/api/index'
+import { PopupPicker } from 'vux'
 export default {
   data () {
     return {
       show: false,
-      city: '',
+      city: [],
       reward: null,
-      pickData: [
+      pickData: [[
         '深圳',
         '成都',
         '重庆',
@@ -50,21 +52,36 @@ export default {
         '上海',
         '武汉',
         '天津'
-      ]
+      ]],
+      phone: ''
     }
   },
-  mounted () { 
-    this.init ()
+  mounted () {
+    this.init()
   },
   methods: {
     init () {
       getAward({
-        openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', 
+        openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         score: this.$route.query.gameCoins
       }).then(res => {
         // this.reward = res.reward
         this.reward = 3
       })
+    },
+    getGift () {
+      let telReg = /^1[2-9][0-9]{9}$/
+      if (!telReg.test(this.phone)) {
+        this.$vux.toast.show({
+          text: '手机号不合法~',
+          width: '10em',
+          type: 'cancel'
+        })
+      }
+      // getGift({
+      //   openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
+      //   phone: this.phone
+      // })
     },
     cancel () {
       this.show = false
@@ -72,10 +89,10 @@ export default {
     confirm (e) {
       this.show = false
       this.city = e
-    } 
+    }
   },
   components: {
-
+    PopupPicker
   }
 }
 </script>

@@ -17,3 +17,5 @@ export const getCommon = data => Util.http.get('/api/huacheng/common', {})
 export const sendMsg = data => Util.http.post('/api/huacheng/msg', data)
 // 获取中奖信息
 export const getAward = data => Util.http.post('/api/huacheng/draw', data)
+// 领取奖品
+export const getGift = data => Util.http.post('/api/huacheng/confirm', data)

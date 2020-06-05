@@ -38,6 +38,14 @@
           color: #231815 !important;
         }
       }
+      .vux-popup-picker-placeholder {
+        font-size: 18px !important;
+        color: rgb(98, 98, 98) !important;
+      }
+      .vux-popup-picker-value {
+        font-size: 18px !important;
+        color: rgb(25, 25, 25) !important;
+      }
       .slideInRight {
         -webkit-animation-name: slideInRight;
         animation-name: slideInRight;
