@@ -11,7 +11,6 @@ import '@/styles/index.css'
 import { vueBaberrage } from 'vue-baberrage'
 
 Vue.use(vueBaberrage)
-
 Vue.use(VueLazyload, {
   loading: require('../static/images/regiser-icon1@2x.png')
 })

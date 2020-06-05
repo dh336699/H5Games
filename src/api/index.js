@@ -15,3 +15,5 @@ export const getLive = data => Util.http.get('rtmp://bo.syglh.com/huacheng/huach
 export const getCommon = data => Util.http.get('/api/huacheng/common', {})
 
 export const sendMsg = data => Util.http.post('/api/huacheng/msg', data)
+// 获取中奖信息
+export const getAward = data => Util.http.post('/api/huacheng/draw', data)
