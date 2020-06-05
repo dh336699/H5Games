@@ -1,8 +1,8 @@
 <template>
   <article class="Index">
-    <section class="Index__countDown">
+    <!-- <section class="Index__countDown">
       <span>{{time}}</span>
-    </section>
+    </section> -->
     <img class="Index__gogogo" src="../../common/images/gogogo.png" @click="toLive">
   </article>
 </template>
@@ -18,8 +18,8 @@
       }
     },
     mounted () {
-      this.timer = setInterval(() => this.countDown(), 1000)
-      this._listen()
+      // this.timer = setInterval(() => this.countDown(), 1000)
+      // this._listen()
     },
     methods: {
       update (e) {

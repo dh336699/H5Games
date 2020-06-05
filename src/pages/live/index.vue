@@ -15,6 +15,10 @@
     <div class="Live__liveNum" v-show="commonData.people">
       <img class="Live__liveNum-userNum" src="../../common/images/user-num.png" /> {{commonData.people / 10000}}万
     </div>
+    <div class="Live__danmu" @click="showDanMu = !showDanMu">
+      <img class="Live__danmu-danmu" v-if="!showDanMu" src="../../common/images/close-danmu.png">
+      <img class="Live__danmu-danmu" v-else src="../../common/images/open-danmu.png">
+    </div>
     <div class='Live__user'>
       <div class='Live__user-left'>
         <img class='avatar' src='../../common/images/avatar@2x.png'/>
@@ -28,10 +32,10 @@
           <img class='orange-bg' src='../../common/images/orange-bg.png' alt=''>
           <p class='bg' :style="{width: activePercentBg + '%'}">{{commonData.energy}}%</p>
           <transition-group name="fade">
-            <img key="1" src='../../common/images/orange-icon.png' v-if="showMovedOrange" class='orange movedOrange'
-            :style="{left: (activePercentOrange - 20) + '%', top: '-43px'}" />
-            <img key="2" src='../../common/images/avatar@2x.png' v-if="showMovedOrange" class='orange movedLogo'
-            :style="{left: (activePercentOrange + 5) + '%', top: '-43px'}" />
+            <img key="1" src='../../common/images/orange-icon.png' v-if="showMovedOrange" class='orange movedLogo'
+            :style="{left: (activePercentOrange + 3) + '%', top: '-43px'}" />
+            <img key="2" src='../../common/images/avatar@2x.png' v-if="showMovedLogo" class='orange movedLogo'
+            :style="{left: (activePercentOrange + 3) + '%', top: '-43px'}" />
           </transition-group>
           <img class='orange'
           @click="toggleOrange()"
@@ -53,7 +57,7 @@
   </section>
   </div>
   <ActiveInfo v-show='activeIdx === 0' />
-  <ChatIn ref="ChatIn" :data.sync="commonData.top" v-show='activeIdx === 1' />
+  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-show='activeIdx === 1' />
   <PlayGame :timeDown="timeDown" v-show='activeIdx === 2' />
   <DaRenLive :data="commonData.live" v-show='activeIdx === 3' />
 
@@ -86,7 +90,9 @@ import { MESSAGE_TYPE } from 'vue-baberrage'
 export default {
   data () {
     return {
+      showDanMu: false,
       showMovedOrange: false,
+      showMovedLogo: false,
       barrageLists: [],
       currentId: 0,
       player: null,
@@ -133,7 +139,8 @@ export default {
       }, {
         value: '视频共21秒',
         time: 3.2
-      }]
+      }],
+      movedOrangeTimes: 0
     }
   },
   computed: {
@@ -173,11 +180,23 @@ export default {
       // setTimeout(() => {
       //   this.isActiveOrange = false
       // }, 2000)
-      if (this.showMovedOrange) return
-      this.showMovedOrange = true
-      setTimeout(() => {
-        this.showMovedOrange = false
-      }, 5000)
+      if (this.showMovedOrange || this.showMovedLogo) return
+      this.movedOrangeTimes++
+      if (this.movedOrangeTimes % 2 === 1) {
+        this.showMovedOrange = true
+        setTimeout(() => {
+          this.showMovedOrange = false
+        }, 1000)
+      } else {
+        this.showMovedLogo = true
+        setTimeout(() => {
+          this.showMovedLogo = false
+        }, 1000)
+      }
+      // this.showMovedOrange = true
+      // setTimeout(() => {
+      //   this.showMovedOrange = false
+      // }, 1000)
     },
     toogle () {
       console.log(this.player)
@@ -248,13 +267,15 @@ export default {
       let socket = io('http://api.shanghaichujie.com:3000')
       socket.on('huacheng', (data) => {
         console.log(data, '!!!!!!!')
-        this.barrageLists.push({ // 弹幕
-          id: ++this.currentId,
-          avatar: data.avatar,
-          msg: data.content,
-          time: 5,
-          type: MESSAGE_TYPE.NORMAL
-        })
+        if (this.showDanMu) { // 控制是否显示弹幕
+          this.barrageLists.push({
+            id: ++this.currentId,
+            avatar: data.avatar,
+            msg: data.content,
+            time: 5,
+            type: MESSAGE_TYPE.NORMAL
+          })
+        }
         this.commonData.top.push({
           avatar: data.avatar,
           msg: data.content,
@@ -315,7 +336,7 @@ export default {
 
   .video-js {
     width: 100vw;
-    height: 5.6533rem /* 212/37.5 */;
+    height: 212px;
   }
 
   .video-js .vjs-big-play-button{
@@ -354,18 +375,10 @@ export default {
     z-index: 2;
   }
 
-  &__canvas {
-    position: absolute;
-    width: 640px;
-    height: 212px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
   &__liveNum {
     position: absolute;
-    top: 4.9867rem /* 187/37.5 */;
-    right: .8533rem /* 32/37.5 */;
+    top: 187px;
+    right: 32px;
     color: white;
     z-index: 3;
     font-size: 10px;
@@ -373,6 +386,18 @@ export default {
     &-userNum {
       margin-right: 6px;
       width: .32rem /* 12/37.5 */;
+    }
+  }
+
+  &__danmu {
+    position: absolute;
+    top: 185px;
+    right: 90px;
+    color: white;
+    z-index: 3;
+    &-danmu {
+      width: 26px;
+      height: 24px;
     }
   }
 
@@ -448,11 +473,11 @@ export default {
           height: 1.0133rem /* 38/37.5 */;
         }
         .movedOrange, .movedLogo {
-          animation-name: moveAnimation;
+          animation-name: moveLogoAnimation;
           transform-origin: center bottom;
           animation-duration: 1s;
           animation-fill-mode: both;
-          animation-iteration-count: 5;
+          animation-iteration-count: 1;
           animation-delay: 0s;
           height: .7467rem /* 28/37.5 */;
         }
@@ -474,78 +499,78 @@ export default {
           }
           40% {
               top:-52px;
-              transform: rotate(12deg);
+              // transform: rotate(12deg);
           }
           50% {
               top:-60px;
-              transform: rotate(24deg);
+              // transform: rotate(24deg);
           }
           60% {
               top:-68px;
-              transform: rotate(12deg);
+              // transform: rotate(12deg);
           }
           70% {
               top:-76px;
-              transform: rotate(0deg);
+              // transform: rotate(0deg);
           }
           80% {
               top:-84px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
           90% {
               top:-92px;
-              transform: rotate(-24deg);
+              // transform: rotate(-24deg);
           }
           100% {
               top:-100px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
         }
 
         @keyframes moveLogoAnimation {
           0% {
               top: -20px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
           10% {
               top:-28px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
           20% {
               top:-36px;
-              transform: rotate(-24deg);
+              // transform: rotate(-24deg);
           }
           30% {
               top:-44px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
           40% {
               top:-52px;
-              transform: rotate(12deg);
+              // transform: rotate(12deg);
           }
           50% {
               top:-60px;
-              transform: rotate(24deg);
+              // transform: rotate(24deg);
           }
           60% {
               top:-68px;
-              transform: rotate(12deg);
+              // transform: rotate(12deg);
           }
           70% {
               top:-76px;
-              transform: rotate(0deg);
+              // transform: rotate(0deg);
           }
           80% {
               top:-84px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
           90% {
               top:-88px;
-              transform: rotate(-24deg);
+              // transform: rotate(-24deg);
           }
           100% {
               top:-92px;
-              transform: rotate(-12deg);
+              // transform: rotate(-12deg);
           }
         }
         .active-orange {
