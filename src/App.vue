@@ -64,6 +64,11 @@
         .vjs-big-play-button{
           font-size: 1.5em!important;
         }
+        .vjs-poster {
+          height: 100%;
+          width: 100%;
+          border-radius: .32rem /* 12/37.5 */ !important;
+        }
       }
 
       .video-js .vjs-big-play-button{

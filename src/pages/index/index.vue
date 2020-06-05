@@ -1,8 +1,9 @@
 <template>
   <article class="Index">
-    <section class="Index__countDown" @click="toLive">
-      <span>跳过 {{time}}</span>
+    <section class="Index__countDown">
+      <span>{{time}}</span>
     </section>
+    <img class="Index__gogogo" src="../../common/images/gogogo.png" @click="toLive">
   </article>
 </template>
 
@@ -13,7 +14,7 @@
         startTime: '',
         timer: null,
         timePush: null,
-        time: 5
+        time: 3
       }
     },
     mounted () {
@@ -47,7 +48,6 @@
       time (newVal, oldVal) {
         !newVal && (this.timePush = setTimeout(() => {
           this.toLive()
-          console.log(1)
         }, 1000))
       }
     },
@@ -72,15 +72,24 @@
     right: .44rem /* 16.5/37.5 */;
     z-index: 1;
     .list(column, center, center);
-    width: 1.8533rem /* 69.5/37.5 */;
-    height: .7467rem /* 28/37.5 */;
+    width: 1.0667rem /* 40/37.5 */;
+    height: 1.0667rem /* 40/37.5 */;
     background: rgb(52, 52, 52);
-    border-radius: .3733rem /* 14/37.5 */;
+    border-radius: 50%;
+    opacity: 0.3;
 
     span {
       font-size: 14px;
       color: white;
     }
+  }
+
+  &__gogogo {
+    position: absolute;
+    left: 50%;
+    bottom: 1.3333rem /* 50/37.5 */;
+    transform: translateX(-50%);
+    width: 4rem /* 150/37.5 */;
   }
 }
 </style>

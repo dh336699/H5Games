@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="Live__liveNum" v-show="commonData.people">
-      当前人数: {{commonData.people / 10000}}万
+      <img class="Live__liveNum-userNum" src="../../common/images/user-num.png" /> {{commonData.people / 10000}}万
     </div>
     <div class='Live__user'>
       <div class='Live__user-left'>
@@ -29,9 +29,15 @@
         <div class='slide-bar'>
           <img class='orange-bg' src='../../common/images/orange-bg.png' alt=''>
           <p class='bg' :style="{width: activePercentBg + '%'}">{{commonData.energy}}%</p>
+          <transition-group name="fade">
+            <img key="1" src='../../common/images/orange-icon.png' v-if="showMovedOrange" class='orange movedOrange'
+            :style="{left: (activePercentOrange - 20) + '%', top: '-43px'}" />
+            <img key="2" src='../../common/images/avatar@2x.png' v-if="showMovedOrange" class='orange movedLogo'
+            :style="{left: (activePercentOrange + 5) + '%', top: '-43px'}" />
+          </transition-group>
           <img class='orange'
-          :class="{'active-orange': isActiveOrange}"
           @click="toggleOrange()"
+          :class="{'active-orange': isActiveOrange}"
           :style="{left: activePercentOrange + '%'}" src='../../common/images/orange-icon.png' alt=''>
         </div>
       </div>
@@ -49,7 +55,7 @@
   </section>
   </div>
   <ActiveInfo v-show='activeIdx === 0' />
-  <ChatIn :data.sync="commonData.top" v-show='activeIdx === 1' />
+  <ChatIn ref="ChatIn" :data.sync="commonData.top" v-show='activeIdx === 1' />
   <PlayGame :timeDown="timeDown" v-show='activeIdx === 2' />
   <DaRenLive :data="commonData.live" v-show='activeIdx === 3' />
 
@@ -60,6 +66,7 @@
         class='needsclick huaqiao video-js vjs-big-play-centered'>
           <source :src="item.url" class="needsclick" type="video/mp4" />
         </video>
+        <span class="title">{{item.title}}</span>
       </div>
     </BScroll>
   </section>
@@ -81,6 +88,7 @@ import { MESSAGE_TYPE } from 'vue-baberrage'
 export default {
   data () {
     return {
+      showMovedOrange: false,
       barrageLists: [],
       currentId: 0,
       player: null,
@@ -115,7 +123,7 @@ export default {
       timeStamp: 1590566435000,
       timeDown: null,
       commonData: {},
-      isActiveOrange: false,
+      isActiveOrange: true,
       dataBarrage: [{
         value: 'speed设为0为非滚动',
         time: 1, // 单位秒
@@ -142,7 +150,6 @@ export default {
     }
   },
   mounted () {
-    this.getLive()
     this.getCommon()
     this._initVideo()
     this._getDanMu()
@@ -163,18 +170,20 @@ export default {
       })
     },
     toggleOrange () {
-      if (this.isActiveOrange) return
-      this.isActiveOrange = true
+      // if (this.isActiveOrange) return
+      // this.isActiveOrange = true
+      // setTimeout(() => {
+      //   this.isActiveOrange = false
+      // }, 2000)
+      if (this.showMovedOrange) return
+      this.showMovedOrange = true
       setTimeout(() => {
-        this.isActiveOrange = false
-      }, 2000)
+        this.showMovedOrange = false
+      }, 5000)
     },
     toogle () {
       console.log(this.player)
       this.player.togglePlay()
-    },
-    getLive () {
-      // api.getLive()
     },
     async getCommon () {
       this.commonData = await api.getCommon()
@@ -208,15 +217,18 @@ export default {
       this.commonData.city.map((item, i) => {
         let play = videojs('myVideo' + i, {
            controls: true,
+           preload: true,
+           poster: 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/images/%E7%9B%B4%E6%92%AD%E5%BE%85%E6%9C%BA%E9%A1%B5%E9%9D%A2.png',
            controlBar: {
-            playToggle: true,
-            remainingTimeDisplay: false,
-            progressControl: false
+            playToggle: true, // 是否展示播放按钮
+            remainingTimeDisplay: true, // 是否显示剩余时间
+            progressControl: false, // 是否显示进度条
+            volumeMenuButton: false // 是否显示音量按钮
           }
         })
         this.huaqiaoArr.push(play)
         // 处理fastclick和videojs的点击两次暂停问题
-        let btnList = document.querySelectorAll('.vjs-play-control')
+        let btnList = document.querySelectorAll('.vjs-control')
         btnList.forEach(item => {
           item.classList.add('needsclick')
         })
@@ -238,12 +250,20 @@ export default {
       let socket = io('http://api.shanghaichujie.com:3000')
       socket.on('huacheng', (data) => {
         console.log(data, '!!!!!!!')
-        this.barrageLists.push({
+        this.barrageLists.push({ // 弹幕
           id: ++this.currentId,
           avatar: data.avatar,
           msg: data.content,
           time: 5,
           type: MESSAGE_TYPE.NORMAL
+        })
+        this.commonData.top.push({
+          avatar: data.avatar,
+          msg: data.content,
+          nickname: data.nickname
+        })
+        this.$nextTick(() => {
+          this.$refs.ChatIn.scroll()
         })
         console.log(this.barrageLists)
       })
@@ -351,6 +371,11 @@ export default {
     color: white;
     z-index: 3;
     font-size: 10px;
+    .list(row, flex-start, center);
+    &-userNum {
+      margin-right: 6px;
+      width: .32rem /* 12/37.5 */;
+    }
   }
 
   &__user {
@@ -411,12 +436,119 @@ export default {
           color: white;
           font-size: .4rem /* 15/37.5 */;
         }
+        .fade-enter, .fade-leave-to{
+          opacity: 0;
+        }
+        .fade-enter-active, .fade-leave-active{
+          transition: opacity 1s;
+        }
         .orange {
           position: absolute;
           top: 0;
           left: 26%;
           top: -4px;
           height: 1.0133rem /* 38/37.5 */;
+        }
+        .movedOrange, .movedLogo {
+          animation-name: moveAnimation;
+          transform-origin: center bottom;
+          animation-duration: 1s;
+          animation-fill-mode: both;
+          animation-iteration-count: 5;
+          animation-delay: 0s;
+          height: .7467rem /* 28/37.5 */;
+        }
+        .movedLogo {
+          animation-name: moveLogoAnimation
+        }
+        @keyframes moveAnimation {
+          0% {
+              top: -20px;
+          }
+          10% {
+              top:-28px;
+          }
+          20% {
+              top:-36px;
+          }
+          30% {
+              top:-44px;
+          }
+          40% {
+              top:-52px;
+              transform: rotate(12deg);
+          }
+          50% {
+              top:-60px;
+              transform: rotate(24deg);
+          }
+          60% {
+              top:-68px;
+              transform: rotate(12deg);
+          }
+          70% {
+              top:-76px;
+              transform: rotate(0deg);
+          }
+          80% {
+              top:-84px;
+              transform: rotate(-12deg);
+          }
+          90% {
+              top:-92px;
+              transform: rotate(-24deg);
+          }
+          100% {
+              top:-100px;
+              transform: rotate(-12deg);
+          }
+        }
+
+        @keyframes moveLogoAnimation {
+          0% {
+              top: -20px;
+              transform: rotate(-12deg);
+          }
+          10% {
+              top:-28px;
+              transform: rotate(-12deg);
+          }
+          20% {
+              top:-36px;
+              transform: rotate(-24deg);
+          }
+          30% {
+              top:-44px;
+              transform: rotate(-12deg);
+          }
+          40% {
+              top:-52px;
+              transform: rotate(12deg);
+          }
+          50% {
+              top:-60px;
+              transform: rotate(24deg);
+          }
+          60% {
+              top:-68px;
+              transform: rotate(12deg);
+          }
+          70% {
+              top:-76px;
+              transform: rotate(0deg);
+          }
+          80% {
+              top:-84px;
+              transform: rotate(-12deg);
+          }
+          90% {
+              top:-88px;
+              transform: rotate(-24deg);
+          }
+          100% {
+              top:-92px;
+              transform: rotate(-12deg);
+          }
         }
         .active-orange {
           animation-name: upAnimation;
@@ -534,6 +666,10 @@ export default {
       }
       .videoDiv:nth-of-type(2n) {
         margin-left: .7333rem /* 27.5/37.5 */;
+      }
+      .title {
+        font-size: 14px;
+        font-weight: 500;
       }
     }
   }

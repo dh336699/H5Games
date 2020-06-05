@@ -24,7 +24,7 @@
     //       this._getToken()
     //     }
     //   }
-    if (!document.cookie) window.href = 'https://api.shanghaichujie.com/huacheng/index'
+    if (!document.cookie.wechat_user) window.location.href = 'https://api.shanghaichujie.com/huacheng/index'
     },
     methods: {
       async _getToken () {

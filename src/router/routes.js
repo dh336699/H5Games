@@ -15,7 +15,7 @@ export default [
     name: 'getToken',
     meta: {
       title: '授权',
-      requireAuth: true
+      requireAuth: false
     },
     component: () => import('@/pages/getToken/getToken')
   }, {
