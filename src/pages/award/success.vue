@@ -31,7 +31,7 @@ export default {
       })
     },
     skip () {
-      window.location.href = "https://m.smartoct.com/"
+      window.location.href = 'https://m.smartoct.com/'
     }
   }
 }

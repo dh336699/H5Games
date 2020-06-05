@@ -7,11 +7,10 @@
     <div class="wrap" v-else>
       <p class="name">恭喜您获得</p>
       <p class="name" v-if="reward == 1">花橙全国畅游单人卡一张</p>
-      <p class="name" v-if="reward == 2">花橙全国畅游亲子卡一张</p> 
+      <p class="name" v-if="reward == 2">花橙全国畅游亲子卡一张</p>
       <p class="name" v-if="reward == 3">欢乐谷年卡一张</p>
       <p class="name" v-if="reward == 4">满100减10优惠券一张</p>
       <p class="name" v-if="reward == 5">满200减30优惠券一张</p>
-     
     </div>
     <!-- <div class="wrap">
       <p class="name">领取成功</p>
@@ -86,7 +85,7 @@ export default {
         phone: this.phone,
         city: this.city
       }).then(res => {
-        if (res.code == 1) {
+        if (res.code === 1) {
           this.$vux.toast.show({
             text: '提交成功',
             width: '10em',
