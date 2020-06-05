@@ -10,11 +10,39 @@
     </div>
     <p @click="addToList()">增加</p>
     <!-- <router-view class="slideInRight" /> -->
+
+    <textarea v-model="input"></textarea>
+
+<!-- <emoji-picker @emoji="insert" :search="search">
+  <div slot="emoji-invoker" slot-scope="{ events: { click: clickEvent } }" @click.stop="clickEvent">
+    <button type="button">open</button>
+  </div>
+  <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
+    <div>
+      <div>
+        <div v-for="(emojiGroup, category) in emojis" :key="category">
+          <h5>{{ category }}</h5>
+          <div>
+            <span
+              v-for="(emoji, emojiName) in emojiGroup"
+              :key="emojiName"
+              @click="insert(emoji)"
+              :title="emojiName"
+            >{{ emoji }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</emoji-picker> -->
+<Emoji></Emoji>
   </div>
 </template>
 
 <script>
 import { MESSAGE_TYPE } from 'vue-baberrage'
+import Emoji from '../components/emoji'
+
   export default {
     data () {
       return {
@@ -38,7 +66,9 @@ import { MESSAGE_TYPE } from 'vue-baberrage'
             type: MESSAGE_TYPE.NORMAL
           }
         ],
-        currentId: 0
+        currentId: 0,
+        input: '',
+        search: ''
       }
     },
     mounted () {
@@ -53,7 +83,13 @@ import { MESSAGE_TYPE } from 'vue-baberrage'
           time: 5,
           type: MESSAGE_TYPE.NORMAL
         })
+      },
+      insert (emoji) {
+        this.input += emoji
       }
+    },
+    components: {
+      Emoji
     }
   }
 </script>
