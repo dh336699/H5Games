@@ -34,5 +34,13 @@ export default [
       requireAuth: true
     },
     component: () => import('@/pages/live')
+  }, {
+    path: '/award',
+    name: 'award',
+    meta: {
+      title: '领奖',
+      requireAuth: true
+    },
+    component: () => import('@/pages/award')
   }
 ]
