@@ -42,5 +42,13 @@ export default [
       requireAuth: true
     },
     component: () => import('@/pages/award')
+  }, {
+    path: '/success',
+    name: 'success',
+    meta: {
+      title: '领奖成功',
+      requireAuth: true
+    },
+    component: () => import('@/pages/award/success')
   }
 ]
