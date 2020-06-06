@@ -42,6 +42,7 @@
           :class="{'active-orange': isActiveOrange}"
           :style="{left: activePercentOrange + '%'}" src='../../common/images/orange-icon.png' alt=''>
         </div>
+        <img class="open-activity" src="../../common/images/open-activity.png" />
       </div>
     </div>
 
@@ -385,7 +386,7 @@ export default {
 
   &__user {
     .list(row, space-between, center);
-    padding: .3333rem /* 12.5/37.5 */ 0.6267rem /* 23.5/37.5 */ .3333rem /* 12.5/37.5 */ .4667rem /* 17.5/37.5 */;
+    padding: .3333rem /* 12.5/37.5 */ 0.6267rem /* 23.5/37.5 */ .16rem /* 6/37.5 */ .4667rem /* 17.5/37.5 */;
     background: white;
     &-left {
       flex: 1;
@@ -420,6 +421,7 @@ export default {
       padding-left: .52rem /* 19.5/37.5 */;
       flex: 1;
       width: 50%;
+      .list(column, flex-start, center);
       .slide-bar {
         padding: 0 .0533rem /* 2/37.5 */ .0533rem /* 2/37.5 */;
         border: 1px solid rgb(253, 98, 69);
@@ -618,7 +620,11 @@ export default {
             transform: rotate(0deg);
             transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
         }
+        }
       }
+      .open-activity {
+        margin-top: .2133rem /* 8/37.5 */;
+        height: .3733rem /* 14/37.5 */;
       }
     }
   }
