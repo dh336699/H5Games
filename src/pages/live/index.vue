@@ -360,7 +360,7 @@ export default {
   &__liveNum {
     position: absolute;
     top: 187px;
-    right: 32px;
+    left: 170px;
     color: white;
     z-index: 3;
     font-size: 10px;
@@ -374,7 +374,7 @@ export default {
   &__danmu {
     position: absolute;
     top: 185px;
-    right: 90px;
+    right: 50px;
     color: white;
     z-index: 3;
     &-danmu {

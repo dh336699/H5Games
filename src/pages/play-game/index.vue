@@ -3,7 +3,7 @@
     <section class="PlayGame__play">
       <img class="PlayGame__play-bg" src="../../common/images/play-games.png" alt="">
       <img class="PlayGame__play-btn" src="../../common/images/play-games-btn.png" alt="">
-      <button @click="play">倒计时<span v-show="timeDown !== '00:00'">{{timeDown}}</span></button>
+      <button @click="play">开始游戏<span v-show="timeDown !== '00:00'">{{timeDown}}</span></button>
     </section>
   </article>
 </template>
