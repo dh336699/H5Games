@@ -75,12 +75,20 @@
       refreshDelay: {
         type: Number,
         default: 20
+      },
+      scrollToEndFlag: {
+        type: Boolean,
+        default: false
       }
     },
     mounted () {
       // 保证在DOM渲染完毕后初始化better-scroll
       setTimeout(() => {
         this._initScroll()
+
+        if(this.scrollToEndFlag) {
+          this.scroll.scrollTo(0,this.scroll.maxScrollY)
+        }
       }, 20)
     },
     methods: {

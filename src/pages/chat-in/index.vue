@@ -1,6 +1,6 @@
 <template>
   <article class="Chat">
-    <BScroll ref="BScroll" v-if="data" :data="data" class="Chat__Bscroll">
+    <BScroll ref="BScroll" :scrollToEndFlag="true" v-if="data" :data="data" class="Chat__Bscroll">
       <ul class="Chat__list">
         <li class="Chat__list-li" v-for="(item, index) in data" :key="index">
           <img :src="item.avatar" class="avatar" alt="">
@@ -56,6 +56,7 @@ export default {
     },
     scroll (e) {
       this.$nextTick(() => {
+        this.$refs.BScroll.refresh()
         this.$refs.BScroll.scrollTo(0, this.$refs.BScroll.scroll.maxScrollY, 1000)
       })
     },
