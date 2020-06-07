@@ -85,10 +85,6 @@
       // 保证在DOM渲染完毕后初始化better-scroll
       setTimeout(() => {
         this._initScroll()
-
-        if(this.scrollToEndFlag) {
-          this.scroll.scrollTo(0,this.scroll.maxScrollY)
-        }
       }, 20)
     },
     methods: {
@@ -136,6 +132,10 @@
             this.$emit('beforeScroll')
           })
         }
+
+        // if (this.scrollToEndFlag) {
+        //   this.scroll.scrollTo(0, this.scroll.maxScrollY)
+        // }
       },
       disable () {
         // 代理better-scroll的disable方法

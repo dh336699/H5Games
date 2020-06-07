@@ -57,10 +57,10 @@
     </div>
   </section>
   </div>
-  <ActiveInfo v-show='activeIdx === 0' />
-  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-show='activeIdx === 1' />
-  <PlayGame v-show='activeIdx === 2' />
-  <DaRenLive :data="commonData.live" v-show='activeIdx === 3' />
+  <ActiveInfo v-if='activeIdx === 0' />
+  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-if='activeIdx === 1' />
+  <PlayGame v-else-if='activeIdx === 2' />
+  <DaRenLive :data="commonData.live" v-else-if='activeIdx === 3' />
 
   <section v-show='activeIdx === 4' class='Live__huaqiao needsclick'>
     <BScroll :pullup='true' v-if="commonData.city" :data="commonData.city" @scrollToEnd='scroll()' class='needsclick Live__huaqiao-videoWrapper'>
@@ -203,6 +203,7 @@ export default {
     async getCommon () {
       this.commonData = await api.getCommon()
       this.commonData.city = [...this.commonData.city]
+      this.commonData.live = [...this.commonData.live]
       console.log(this.commonData)
     },
     changeActive (index) {
@@ -264,9 +265,7 @@ export default {
           msg: data.content,
           nickname: data.nickname
         })
-        this.$nextTick(() => {
-          this.$refs.ChatIn.scroll()
-        })
+          // this.$refs.ChatIn.scroll()
         console.log(this.barrageLists)
       })
     },
@@ -360,8 +359,8 @@ export default {
 
   &__liveNum {
     position: absolute;
-    top: 187px;
-    left: 170px;
+    top: 190px;
+    right: 32px;
     color: white;
     z-index: 3;
     font-size: 10px;
@@ -375,7 +374,7 @@ export default {
   &__danmu {
     position: absolute;
     top: 185px;
-    right: 50px;
+    right: 90px;
     color: white;
     z-index: 3;
     &-danmu {

@@ -1,6 +1,5 @@
 <template>
   <article class="Daren">
-    <BScroll class="Daren__Bscroll" :data="data">
       <ul class="Daren__list">
         <li class="Daren__list-li" v-for="(item, index) in data" :key="index" @click="navTo(item.url)">
           <img :src="item.img" class="avatar" alt="">
@@ -17,7 +16,6 @@
           </div>
         </li>
       </ul>
-    </BScroll>
   </article>
 </template>
 
@@ -66,6 +64,7 @@ export default {
   &__list {
     padding: .4rem /* 15/37.5 */ .3067rem /* 11.5/37.5 */;
     background: #F5F9FA;
+    overflow: auto;
     &-li {
       position: relative;
       display: flex;

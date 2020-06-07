@@ -3,6 +3,7 @@
     <!-- <section class="Index__countDown">
       <span>{{time}}</span>
     </section> -->
+    <img class="Index__bg" src="../../common/images/index.png">
     <img class="Index__gogogo" src="../../common/images/gogogo.png" @click="toLive">
   </article>
 </template>
@@ -64,11 +65,14 @@
 @import '../../common/styles/elements.less';
 
 .Index {
-  position: relative;
-  height: 100vh;
-  background: url(../../common/images/index.png);
-  background-size: 100% 100%;
-  font-size: 0;
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
 
   &__countDown {
     position: absolute;
@@ -94,6 +98,7 @@
     bottom: 1.3333rem /* 50/37.5 */;
     transform: translateX(-50%);
     width: 4rem /* 150/37.5 */;
+    z-index: 2;
   }
 }
 </style>

@@ -16,6 +16,7 @@
     height: 100%;
     -webkit-overflow-scrolling: touch;
     touch-action: none;
+    scroll-behavior: smooth;
     body {
       // 解决移动端modal滚动击穿
       height: 100%;

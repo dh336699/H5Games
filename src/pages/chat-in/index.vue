@@ -1,7 +1,7 @@
 <template>
   <article class="Chat">
-    <BScroll ref="BScroll" :scrollToEndFlag="true" v-if="data" :data="data" class="Chat__Bscroll">
-      <ul class="Chat__list">
+    <div :click="false" ref="BScroll" :scrollToEndFlag="true" v-if="data" :data="data" class="Chat__Bscroll">
+      <ul class="Chat__list" style="overflow: auto">
         <li class="Chat__list-li" v-for="(item, index) in data" :key="index">
           <img :src="item.avatar" class="avatar" alt="">
           <div class="info">
@@ -13,8 +13,9 @@
             <p class="info-desc">{{item.msg}}</p>
           </div>
         </li>
+        <div id="empty-box"></div>
       </ul>
-    </BScroll>
+    </div>
     <section class="Chat__sendMsgWrapper">
       <transition name="fade">
         <Emoji @getEmoji="getEmoji" v-show="isShowEmoji" />
@@ -39,7 +40,8 @@ export default {
     return {
       msg: '',
       checked: false,
-      isShowEmoji: false
+      isShowEmoji: false,
+      emptyDom: null
     }
   },
   props: {
@@ -50,15 +52,13 @@ export default {
       type: Boolean
     }
   },
+  mounted () {
+    this.emptyDom = document.querySelector('#empty-box')
+    this.emptyDom.scrollIntoView()
+  },
   methods: {
     getEmoji (it) {
       this.msg += it.value
-    },
-    scroll (e) {
-      this.$nextTick(() => {
-        this.$refs.BScroll.refresh()
-        this.$refs.BScroll.scrollTo(0, this.$refs.BScroll.scroll.maxScrollY, 1000)
-      })
     },
     async sendMsg () {
       // this.data.push(this.msg)
@@ -66,6 +66,7 @@ export default {
       await api.sendMsg({openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
       this.msg = ''
       this.isShowEmoji = false
+      this.emptyDom.scrollIntoView({behavior: 'smooth'})
     }
   },
   components: {
