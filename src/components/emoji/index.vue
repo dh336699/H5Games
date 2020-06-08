@@ -5,7 +5,7 @@
         <span v-if="item.status === 'used'">常用</span>
         <span v-else>人物</span>
         <div>
-          <span @click="getEmoji(it)" v-for="(it, idx) in item.child" :key="idx">
+          <span @click="getEmoji(it)" v-for="(it, idx) in item.child" :key="idx" class="emoji-span">
             {{it.value}}
           </span>
         </div>
@@ -41,5 +41,11 @@ export default {
 .Emojs {
   font-size: 18px;
   background: gray;
+  .emoji-span {
+    display: inline-block;
+    text-align: center !important;
+    margin-bottom: 5px !important;
+    padding: 0 5px;
+  }
 }
 </style>
