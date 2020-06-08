@@ -2,7 +2,7 @@
   <article class="PlayGame">
     <section class="PlayGame__play">
       <img class="PlayGame__play-bg" src="../../common/images/play-games.png" alt="">
-      <img class="PlayGame__play-btn" src="../../common/images/play-games-btn.png" alt="">
+      <!-- <img class="PlayGame__play-btn" src="../../common/images/play-games-btn.png" alt=""> -->
       <button @click="play">开始游戏<span v-show="timeDown !== '00:00'">{{timeDown}}</span></button>
     </section>
   </article>
@@ -66,26 +66,32 @@ export default {
   left: 0;
   right: 0;
   &__play {
-    padding: .16rem /* 6/37.5 */ .8267rem /* 31/37.5 */ 0 .56rem /* 21/37.5 */;
+    position: relative;
+    // padding: .16rem /* 6/37.5 */ .8267rem /* 31/37.5 */ 0 .56rem /* 21/37.5 */;
     &-bg {
-      width: 100%;
+      width: 90%;
+      margin-left: 5%;
     }
-    &-btn {
-      position: absolute;
-      bottom: 10px;
-      left: 139px;
-      width: 120px;
-    }
+    // &-btn {
+    //   position: absolute;
+    //   bottom: 10px;
+    //   left: 139px;
+    //   width: 120px;
+    // }
     button {
       position: absolute;
       bottom: 10px;
-      left: 139px;
+      left: 50%;
       width: 120px;
-      height: 50px;
-      background: transparent;
-      font-size: 12px;
-      color: white;
+      height: 35px;
+      margin-left: -43px;
+      font-size: 14px;
+      line-height: 35px;
+      border-radius: 20px;
+      color: #ffffff;
       font-weight: bold;
+      text-align: center; 
+      background:  linear-gradient(to right, rgba(248, 59, 61, 255), rgba(251, 132, 82, 255));
     }
   }
 }

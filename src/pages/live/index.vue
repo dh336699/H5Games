@@ -103,7 +103,7 @@ export default {
         {index: 3, nav: '达人直播'},
         {index: 4, nav: '精彩华侨城'}
       ],
-      activeIdx: 0,
+      activeIdx: 2,
       activePercent: 20,
       huaqiaoArr: [],
       list: [
