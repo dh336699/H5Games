@@ -11,22 +11,14 @@
       <p class="name" v-if="reward == 3">欢乐谷年卡一张</p>
       <p class="name" v-if="reward == 4">满100减10优惠券一张</p>
       <p class="name" v-if="reward == 5">满200减30优惠券一张</p>
-    </div>
-    <!-- <div class="wrap">
-      <p class="name">领取成功</p>
-      <p class="tips">
-        恭喜您获得
-        <span v-if="reward == 1">【花橙全国畅游单人卡一张】</span>
-        <span v-if="reward == 2">【花橙全国畅游亲子卡一张】</span>
-        <span v-if="reward == 4">【满100减10优惠券一张】</span>
-        <span v-if="reward == 5">【满200减30优惠券一张】</span>
+      <p class="tips" v-if="reward == 3">
+        请选择想要领取年卡的城市，欢乐谷年卡将会于2个工作日内发放到华侨城官方商城<span>【花橙旅游】</span>，我的优惠券中。此优惠券只能购买所选择城市的欢乐谷年卡一张。
       </p>
-      <p class="tips tips-b"> <img src="../../common/images/finger.png" alt=""> 点击查看</p>
-    </div> -->
+    </div>
     <div class="btn-award">
-      <div class="list" v-if="reward == 3" @click="show = true">
-        <PopupPicker :data="pickData" v-model="city" placeholder="城市"></PopupPicker>
-        <img src="../../common/images/arrow.png" alt="">
+      <div class="list" v-if="reward == 3">
+        <PopupPicker :data="pickData" v-model="city" placeholder="请选择城市" width="100%" :show.sync="show"></PopupPicker>
+        <img src="../../common/images/arrow.png" alt="" @click="show = true">
       </div>
       <div class="list" v-if="reward !== 0">
         <input type="number" placeholder="请输入手机号码" class="in-input" v-model="phone">
@@ -71,6 +63,14 @@ export default {
       })
     },
     submit () {
+      if (this.city.length == 0) {
+        this.$vux.toast.show({
+          text: '请选择城市',
+          width: '10em',
+          type: 'cancel'
+        })
+        return
+      }
       let telReg = /^1[2-9][0-9]{9}$/
       if (!telReg.test(this.phone)) {
         this.$vux.toast.show({
@@ -80,10 +80,12 @@ export default {
         })
         return
       }
+      let str = ''
+      str = this.city.join(',')
       getGift({
         openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         phone: this.phone,
-        city: this.city
+        city: str
       }).then(res => {
         if (res.code === 1) {
           this.$vux.toast.show({

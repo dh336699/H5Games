@@ -50,7 +50,7 @@ export default {
   .wrap {
     width: 100%;
     min-height: 150px;
-    margin-top: 48%;
+    margin-top: 50%;
     .name {
       font-size: 20px;
       font-weight: bold;
