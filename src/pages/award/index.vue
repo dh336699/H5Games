@@ -11,12 +11,12 @@
       <p class="name" v-if="reward == 3">欢乐谷年卡一张</p>
       <p class="name" v-if="reward == 4">满100减10优惠券一张</p>
       <p class="name" v-if="reward == 5">满200减30优惠券一张</p>
-      <p class="tips" v-if="reward == 3">
+      <p class="tips" v-show="reward == 3">
         请选择想要领取年卡的城市，欢乐谷年卡将会于2个工作日内发放到华侨城官方商城<span>【花橙旅游】</span>，我的优惠券中。此优惠券只能购买所选择城市的欢乐谷年卡一张。
       </p>
     </div>
     <div class="btn-award">
-      <div class="list" v-if="reward == 3">
+      <div class="list" v-show="reward == 3">
         <PopupPicker :data="pickData" v-model="city" placeholder="请选择城市" width="100%" :show.sync="show"></PopupPicker>
         <img src="../../common/images/arrow.png" alt="" @click="show = true">
       </div>
@@ -59,7 +59,8 @@ export default {
         openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         score: this.$route.query.gameCoins
       }).then(res => {
-        this.reward = res.reward
+        // this.reward = res.reward
+        this.reward = 3
       })
     },
     submit () {
@@ -130,7 +131,7 @@ export default {
   .wrap {
     width: 100%;
     min-height: 150px;
-    margin-top: 48%;
+    margin-top: 49.4%;
     .name {
       font-size: 20px;
       font-weight: bold;
@@ -157,16 +158,22 @@ export default {
     }
   }
   .btn-award {
+    position: absolute;
+    top: 60%;
     text-align: center;
-    margin-top: 3.2rem;
+    width: 100%;
     .list {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 4rem;
+      width: 4.5rem;
       background: #ffffff;
       padding: 5px 10px;
       margin: 20px auto 0;
+      text-align: left;
+      span {
+        text-align: left !important;
+      }
       input {
         width: 80%;
         font-size: 18px;
@@ -179,7 +186,7 @@ export default {
       }
     }
     .icon {
-      width: 4rem;
+      width: 4.5rem;
       margin-top: 20px;
     }
   }

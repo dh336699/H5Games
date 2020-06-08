@@ -69,7 +69,7 @@
         class='needsclick huaqiao video-js vjs-big-play-centered'>
           <source :src="item.url" class="needsclick" type="video/mp4" />
         </video>
-        <span class="title">{{item.title}}</span>
+        <p class="title">{{item.title}}</p>
       </div>
     </BScroll>
   </section>
@@ -678,8 +678,9 @@ export default {
         margin-left: .7333rem /* 27.5/37.5 */;
       }
       .title {
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
+        margin-top: 5px;
       }
     }
   }
