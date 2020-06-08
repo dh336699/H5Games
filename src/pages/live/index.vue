@@ -237,7 +237,7 @@ export default {
     },
     play (idx) {
       console.log(this.huaqiaoArr[idx])
-      // this.player.pause()
+      this.player.pause()
       this.huaqiaoArr.forEach((player, index) => {
         idx === index && player.play()
         idx !== index && player.pause()

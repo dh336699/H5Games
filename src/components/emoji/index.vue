@@ -39,13 +39,14 @@ export default {
 <style lang='less' scoped>
 @import '../../common/styles/elements.less';
 .Emojs {
-  font-size: 18px;
+  font-size: 20px;
   background: gray;
+  padding-left: .2133rem /* 8/37.5 */;
   .emoji-span {
     display: inline-block;
     text-align: center !important;
-    margin-bottom: 5px !important;
-    padding: 0 5px;
+    margin-bottom: 8px !important;
+    padding: 0 8px 0 0;
   }
 }
 </style>
