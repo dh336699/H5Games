@@ -101,6 +101,7 @@ export default {
       border-radius: .1067rem /* 4/37.5 */;
       .avatar {
         .imgs(1.12rem /* 42/37.5 */, 1.12rem /* 42/37.5 */);
+        flex: 0 0 1.12rem /* 42/37.5 */;
         margin-right: .5333rem /* 20/37.5 */;
         border-radius: 50%;
       }

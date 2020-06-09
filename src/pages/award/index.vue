@@ -11,9 +11,11 @@
       <p class="name" v-if="reward == 3">欢乐谷年卡一张</p>
       <p class="name" v-if="reward == 4">满100减10优惠券一张</p>
       <p class="name" v-if="reward == 5">满200减30优惠券一张</p>
-      <p class="tips" v-show="reward == 3">
-        请选择想要领取年卡的城市，欢乐谷年卡将会于2个工作日内发放到华侨城官方商城<span>【花橙旅游】</span>，我的优惠券中。此优惠券只能购买所选择城市的欢乐谷年卡一张。
-      </p>
+      <p class="tips first" v-show="reward == 3">
+        请选择想要领取年卡的城市，欢乐谷年卡</p>
+      <p class="tips" v-show="reward == 3">将会于2个工作日内发放到华侨城官方商城</p>
+      <p class="tips" v-show="reward == 3"><span>【花橙旅游】，我的优惠券中。此优惠券</span></p>
+      <p class="tips" v-show="reward == 3">只能购买所选择城市的欢乐谷年卡一张。</p>
     </div>
     <div class="btn-award">
       <div class="list" v-show="reward == 3">
@@ -39,7 +41,7 @@ export default {
       flag: false,
       show: false,
       city: [],
-      reward: null,
+      reward: 3,
       pickData: [[
         '深圳',
         '成都',
@@ -144,14 +146,16 @@ export default {
     }
     .tips {
       width: 60%;
-      margin-left: 20%;
+      margin-left: 22%;
       font-size: 12.5px;
       color: #ffffff;
-      margin-top: 15px;
       span {
         color: #fdb27b;
       }
     }
+    .first {
+        margin-top: 15px;
+      }
     .tips-b {
       display: flex;
       align-items: center;

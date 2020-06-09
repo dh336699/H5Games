@@ -57,9 +57,8 @@
     </div>
   </section>
   </div>
-  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-show='activeIdx === 1' />
   <ActiveInfo v-if='activeIdx === 0' />
-  
+  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-else-if='activeIdx === 1' />
   <PlayGame v-else-if='activeIdx === 2' />
   <DaRenLive :data="commonData.live" v-else-if='activeIdx === 3' />
 
