@@ -1,6 +1,6 @@
 <template>
   <article class="ActiveInfo">
-    <img src="../../common/images/activity.png" class="ActiveInfo__active">
+    <img src="../../common/images/activte.png" class="ActiveInfo__active">
   </article>
 </template>
 
@@ -25,8 +25,9 @@ export default {
 <style lang='less' scoped>
 @import '../../common/styles/elements.less';
 .ActiveInfo {
-  padding: .28rem /* 10.5/37.5 */ 1.2rem /* 45/37.5 */ 0;
-  background: #F5F9FA;
+  padding: .8rem /* 10.5/37.5 */ 1.2rem /* 45/37.5 */ 0;
+  background: url('../../common/images/abg.png') no-repeat;
+  background-size: 100% 100%;
   &__active {
     width: 100%;
   }

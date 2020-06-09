@@ -17,7 +17,7 @@
     </div>
     <div class="btn-award">
       <div class="list" v-show="reward == 3">
-        <PopupPicker :data="pickData" v-model="city" placeholder="请选择城市" width="100%" :show.sync="show"></PopupPicker>
+        <input type="text" v-model="city" class="in-input" placeholder="城市" readonly>
         <img src="../../common/images/arrow.png" alt="" @click="show = true">
       </div>
       <div class="list" v-if="reward !== 0">
@@ -25,6 +25,7 @@
       </div>
       <img src="../../common/images/back.png" alt="" class="icon" v-if="reward == 0" @click="back()">
       <img src="../../common/images/get.png" alt="" class="icon" @click="submit" v-else>
+      <PopupPicker :data="pickData" v-model="city" placeholder="请选择城市" width="100%" :show.sync="show" v-show = "flag"></PopupPicker>
     </div>
   </article>
 </template>
@@ -35,6 +36,7 @@ import { PopupPicker } from 'vux'
 export default {
   data () {
     return {
+      flag: false,
       show: false,
       city: [],
       reward: null,
@@ -64,14 +66,15 @@ export default {
       })
     },
     submit () {
-      if (this.reward = 3) {
-      if (this.city.length == 0) {
-        this.$vux.toast.show({
-          text: '请选择城市',
-          width: '10em',
-          type: 'cancel'
-        })
-        return
+      if (this.reward == 3) {
+        if (this.city.length == 0) {
+          this.$vux.toast.show({
+            text: '请选择城市',
+            width: '10em',
+            type: 'cancel'
+          })
+          return
+        }
       }
       let telReg = /^1[2-9][0-9]{9}$/
       if (!telReg.test(this.phone)) {
@@ -142,9 +145,9 @@ export default {
     .tips {
       width: 60%;
       margin-left: 20%;
-      font-size: 12px;
+      font-size: 12.5px;
       color: #ffffff;
-      margin-top: 10px;
+      margin-top: 15px;
       span {
         color: #fdb27b;
       }

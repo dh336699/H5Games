@@ -65,6 +65,10 @@ export default {
   top: 8.48rem /* 318/37.5 */;
   left: 0;
   right: 0;
+  background: url('../../common/images/abg.png') no-repeat;
+  background-size: 100% 100%;
+  padding: .5rem 0 2rem;
+  margin-top: -20px;
   &__play {
     position: relative;
     // padding: .16rem /* 6/37.5 */ .8267rem /* 31/37.5 */ 0 .56rem /* 21/37.5 */;
@@ -80,11 +84,11 @@ export default {
     // }
     button {
       position: absolute;
-      bottom: 10px;
+      bottom: 20px;
       left: 50%;
       width: 120px;
       height: 35px;
-      margin-left: -43px;
+      margin-left: -60px;
       font-size: 14px;
       line-height: 35px;
       border-radius: 20px;
