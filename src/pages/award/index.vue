@@ -59,11 +59,12 @@ export default {
         openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         score: this.$route.query.gameCoins
       }).then(res => {
-        // this.reward = res.reward
-        this.reward = 3
+        this.reward = res.reward
+        // this.reward = 3
       })
     },
     submit () {
+      if (this.reward = 3) {
       if (this.city.length == 0) {
         this.$vux.toast.show({
           text: '请选择城市',
