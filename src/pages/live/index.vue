@@ -57,8 +57,9 @@
     </div>
   </section>
   </div>
+  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-show='activeIdx === 1' />
   <ActiveInfo v-if='activeIdx === 0' />
-  <ChatIn ref="ChatIn" :showDanMu="showDanMu" :data.sync="commonData.top" v-if='activeIdx === 1' />
+  
   <PlayGame v-else-if='activeIdx === 2' />
   <DaRenLive :data="commonData.live" v-else-if='activeIdx === 3' />
 
@@ -646,6 +647,7 @@ export default {
   }
 
   &__huaqiao {
+    margin-top: .5333rem /* 20/37.5 */;
     padding: .3067rem /* 11.5/37.5 */ .5733rem /* 21.5/37.5 */;
     &-videoWrapper {
       .list(row, flex-start, center);

@@ -14,7 +14,7 @@ import { ToastPlugin } from 'vux'
 Vue.use(ToastPlugin)
 Vue.use(vueBaberrage)
 Vue.use(VueLazyload, {
-  loading: require('../static/images/regiser-icon1@2x.png')
+  loading: require('./common/images/orange-icon.png')
 })
 
 //  点击延迟

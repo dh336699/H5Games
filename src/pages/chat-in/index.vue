@@ -3,7 +3,7 @@
     <div :click="false" ref="BScroll" :scrollToEndFlag="true" v-if="data" :data="data" class="Chat__Bscroll">
       <ul class="Chat__list" style="overflow: auto">
         <li class="Chat__list-li" v-for="(item, index) in data" :key="index">
-          <img :src="item.avatar" class="avatar" alt="">
+          <img v-lazy="item.avatar" class="avatar" alt="">
           <div class="info">
             <div class="info-title">
               <p>{{item.nickname}} </p>
@@ -54,7 +54,7 @@ export default {
   },
   mounted () {
     this.emptyDom = document.querySelector('#empty-box')
-    this.emptyDom.scrollIntoView()
+    this.emptyDom && this.emptyDom.scrollIntoView()
   },
   methods: {
     getEmoji (it) {
