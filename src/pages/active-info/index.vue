@@ -25,7 +25,7 @@ export default {
 <style lang='less' scoped>
 @import '../../common/styles/elements.less';
 .ActiveInfo {
-  padding: .8rem /* 10.5/37.5 */ 1.2rem /* 45/37.5 */ 0;
+  padding: .3rem /* 10.5/37.5 */ .7rem /* 45/37.5 */ 0;
   background: url('../../common/images/abg.png') no-repeat;
   background-size: 100% 100%;
   &__active {
