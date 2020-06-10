@@ -1,6 +1,6 @@
 <template>
   <article class="award">
-    <div class="wrap" v-if="reward == 0">
+    <!-- <div class="wrap" v-if="reward == 0">
       <p class="name">很遗憾没有中奖</p>
       <p class="name">下次继续加油吧</p>
     </div>
@@ -16,7 +16,13 @@
       <p class="tips" v-show="reward == 3">将会于2个工作日内发放到华侨城官方商城</p>
       <p class="tips" v-show="reward == 3"><span>【花橙旅游】，我的优惠券中。此优惠券</span></p>
       <p class="tips" v-show="reward == 3">只能购买所选择城市的欢乐谷年卡一张。</p>
-    </div>
+    </div> -->
+    <img src="../../common/images/a4.png" alt="" v-if="reward == 0" class="tips">
+    <img src="../../common/images/a1.png" alt="" v-if="reward == 1" class="tips">
+    <img src="../../common/images/a2.png" alt="" v-if="reward == 2" class="tips">
+    <img src="../../common/images/a3.png" alt="" v-if="reward == 3" class="tips">
+    <img src="../../common/images/100-10.png" alt="" v-if="reward == 4" class="tips">
+    <img src="../../common/images/200-30.png" alt="" v-if="reward == 5" class="tips">
     <div class="btn-award">
       <div class="list" v-show="reward == 3">
         <input type="text" v-model="city" class="in-input" placeholder="城市" readonly>
@@ -64,7 +70,6 @@ export default {
         score: this.$route.query.gameCoins
       }).then(res => {
         this.reward = res.reward
-        // this.reward = 3
       })
     },
     submit () {
@@ -132,42 +137,15 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('../../common/images/bg.png') no-repeat;
+  background: url('../../common/images/bg.jpg') no-repeat;
   background-size: 100% 100%;
-  .wrap {
-    width: 100%;
-    min-height: 150px;
-    margin-top: 49.4%;
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      color: #ffffff;
-    }
-    .tips {
-      width: 60%;
-      margin-left: 22%;
-      font-size: 12.5px;
-      color: #ffffff;
-      span {
-        color: #fdb27b;
-      }
-    }
-    .first {
-        margin-top: 15px;
-      }
-    .tips-b {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: 20px;
-      }
-    }
+  .tips {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 20px;
+    vertical-align: bottom;
   }
   .btn-award {
-    position: absolute;
-    top: 60%;
     text-align: center;
     width: 100%;
     .list {
@@ -194,14 +172,9 @@ export default {
       }
     }
     .icon {
-      width: 4.5rem;
+      width: 4.2rem;
       margin-top: 20px;
     }
-  }
-  .time-wrap {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
   }
 }
 </style>
