@@ -9,9 +9,10 @@ import Reg from './common/js/reg'
 import VueLazyload from 'vue-lazyload'
 import '@/styles/index.css'
 import { vueBaberrage } from 'vue-baberrage'
-import { ToastPlugin } from 'vux'
+import { ToastPlugin, LoadingPlugin } from 'vux'
 
 Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 Vue.use(vueBaberrage)
 Vue.use(VueLazyload, {
   loading: require('./common/images/orange-icon.png')

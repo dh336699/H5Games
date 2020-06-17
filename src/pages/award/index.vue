@@ -59,8 +59,9 @@ export default {
   },
   methods: {
     init () {
+      let token = JSON.parse(localStorage.token)
       getAward({
-        openid: localStorage.token.openid ? localStorage.token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
+        openid: token.openid ? token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         score: this.$route.query.gameCoins
       }).then(res => {
         this.reward = res.reward
@@ -89,8 +90,9 @@ export default {
       }
       let str = ''
       str = this.city.join(',')
+      let token = JSON.parse(localStorage.token)
       getGift({
-        openid: localStorage.token.openid ? localStorage.token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
+        openid: token.openid ? token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo',
         phone: this.phone,
         city: str
       }).then(res => {

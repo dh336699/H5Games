@@ -243,7 +243,7 @@ export default {
     },
     _getDanMu () {
       console.log('进入')
-      let socket = io('http://api.shanghaichujie.com:3000')
+      let socket = io('https://api.shanghaichujie.com')
       socket.on('huacheng', (data) => {
         console.log(data, '!!!!!!!')
         if (this.showDanMu) { // 控制是否显示弹幕
@@ -266,7 +266,7 @@ export default {
     },
     _initVideo () {
       var options = {
-        'm3u8': 'http://bo2.syglh.com/live/huacheng.m3u8', // ps请替换成实际可用的播放地址
+        'm3u8': 'https://bo2.syglh.com/live/huacheng.m3u8', // ps请替换成实际可用的播放地址
         // 'autoplay': true, // iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
         // mp4: '//1256993030.vod2.myqcloud.com/d520582dvodtransgzp1256993030/7732bd367447398157015849771/v.f30.mp4',
         // controls: 'system',

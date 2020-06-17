@@ -62,8 +62,13 @@ export default {
     },
     async sendMsg () {
       // this.data.push(this.msg)
+      let token = JSON.parse(localStorage.token)
       if (!this.msg) return
-      await api.sendMsg({openid: localStorage.token.openid ? localStorage.token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
+      if (token.enabled == 1) {
+        this.$vux.toast.show({text: '当前禁止发弹幕'})
+        return
+      }
+      await api.sendMsg({openid: token.openid ? token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
       this.msg = ''
       this.isShowEmoji = false
       this.emptyDom.scrollIntoView({behavior: 'smooth'})
