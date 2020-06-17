@@ -34,8 +34,8 @@
           <transition-group name="fade">
             <img key="1" src='../../common/images/orange-icon.png' v-if="showMovedOrange" class='orange movedLogo'
             :style="{left: (activePercentOrange + 3) + '%', top: '-43px'}" />
-            <img key="2" src='../../common/images/avatar@2x.png' v-if="showMovedLogo" class='orange movedLogo'
-            :style="{left: (activePercentOrange + 3) + '%', top: '-43px'}" />
+            <!-- <img key="2" src='../../common/images/avatar@2x.png' v-if="showMovedLogo" class='orange movedLogo'
+            :style="{left: (activePercentOrange + 3) + '%', top: '-43px'}" /> -->
           </transition-group>
           <img class='orange'
           @click="toggleOrange()"
@@ -173,14 +173,9 @@ export default {
       })
     },
     toggleOrange () {
-      // if (this.isActiveOrange) return
-      // this.isActiveOrange = true
-      // setTimeout(() => {
-      //   this.isActiveOrange = false
-      // }, 2000)
       if (this.showMovedOrange || this.showMovedLogo) return
-      this.movedOrangeTimes++
-      if (this.movedOrangeTimes % 2 === 1) {
+      // this.movedOrangeTimes++
+      if (this.movedOrangeTimes % 2 !== 1) {
         this.showMovedOrange = true
         setTimeout(() => {
           this.showMovedOrange = false
@@ -406,12 +401,14 @@ export default {
           line-height: .3733rem /* 14/37.5 */;
           font-size: .4267rem /* 16/37.5 */;
           font-weight: bold;
+          color: #0068b6;
         }
 
         span {
           font-size: .32rem /* 12/37.5 */;
           color: rgb(171, 171, 171);
           font-weight: 500;
+          color: #f6764f;
         }
       }
     }
@@ -637,9 +634,9 @@ export default {
         font-size: .3733rem /* 14/37.5 */;
         color: rgb(253, 178, 123);
         &.active {
-          font-size: .4267rem /* 16/37.5 */;
+          font-size: 18px;
           color: rgb(41, 110, 173);
-          border-bottom: 2px solid rgb(41, 110, 173);
+          // border-bottom: 2px solid rgb(41, 110, 173);
         }
       }
     }

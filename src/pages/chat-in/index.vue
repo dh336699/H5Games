@@ -63,7 +63,7 @@ export default {
     async sendMsg () {
       // this.data.push(this.msg)
       if (!this.msg) return
-      await api.sendMsg({openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
+      await api.sendMsg({openid: localStorage.token.openid ? localStorage.token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
       this.msg = ''
       this.isShowEmoji = false
       this.emptyDom.scrollIntoView({behavior: 'smooth'})
