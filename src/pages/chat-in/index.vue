@@ -62,8 +62,17 @@ export default {
     },
     async sendMsg () {
       // this.data.push(this.msg)
+      let token = JSON.parse(localStorage.token)
       if (!this.msg) return
-      await api.sendMsg({openid: 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
+      if (token.enabled == 1) {
+        this.$vux.toast.show({
+          text: '当前禁止发弹幕',
+          type: 'text',
+          position: 'middle'
+        })
+        return
+      }
+      await api.sendMsg({openid: token.openid ? token.openid : 'o1RgAsxDHW_fGXfehpSsjgo0LXvo', content: this.msg})
       this.msg = ''
       this.isShowEmoji = false
       this.emptyDom.scrollIntoView({behavior: 'smooth'})
@@ -110,6 +119,7 @@ export default {
           .list(row, flex-start, center);
           margin-bottom: .0533rem /* 2/37.5 */;
           p:first-of-type {
+            flex: 0 0 1.2rem /* 45/37.5 */;
             font-size: .32rem /* 12/37.5 */;
             color: rgb(77, 139, 226);
           }
@@ -122,6 +132,7 @@ export default {
         }
         &-desc {
           font-size: .2667rem /* 10/37.5 */;
+          line-height: 1.3;
         }
       }
     }

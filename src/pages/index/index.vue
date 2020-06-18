@@ -1,8 +1,8 @@
 <template>
   <article class="Index">
-    <!-- <section class="Index__countDown">
+    <section class="Index__countDown">
       <span>{{time}}</span>
-    </section> -->
+    </section>
     <img class="Index__bg" src="../../common/images/index.png">
     <img class="Index__gogogo" src="../../common/images/gogogo.png" @click="toLive">
   </article>
@@ -19,8 +19,8 @@
       }
     },
     mounted () {
-      // this.timer = setInterval(() => this.countDown(), 1000)
-      // this._listen()
+      this.timer = setInterval(() => this.countDown(), 1000)
+      this._listen()
       console.log(document.cookie)
       if (document.cookie.wechat_user && !localStorage.userInfo) {
         localStorage.userInfo = document.cookie.wechat_user
@@ -85,6 +85,7 @@
     background: rgb(52, 52, 52);
     border-radius: 50%;
     opacity: 0.3;
+    z-index: 3;
 
     span {
       font-size: 14px;
